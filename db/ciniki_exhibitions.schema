@@ -1,0 +1,39 @@
+#
+# Description
+# -----------
+# This tables stores the basic information for an exhibition, that will be queried often.  
+# More details about the exhibition will be stored in ciniki_exhibition_details.
+#
+# Fields
+# ------
+# id:				The ID for the exhibition
+# uuid:				The Universal Unique ID for the exhibition.
+# business_id:		The ID of the business the exhibition is a part of.
+#
+# name:				The name of the exhibition.
+# permalink:		The permalink used to reference this exhibition in the website.
+# type:				**future** The type of exhibition.  Default to 1.
+# description:		The description of the exhibition.  This will be used on the website.
+# tagline:			The tagline for the exhibition.
+# start_date:		The first date of the exhibition.
+# end_date:			The end date of the exhibition.
+#
+# date_added:		The UTC date and time the exhibition was added.
+# last_updated: 	The UTC date and time the exhibition was last updated.
+#
+create table ciniki_exhibitions (
+	id int not null auto_increment,
+	uuid char(36) not null,
+	business_id int not null,
+	name varchar(150) not null,
+	permalink varchar(150) not null,
+	type tinyint unsigned not null,
+	description varchar(6000) not null,
+	tagline varchar(150) not null,
+	start_date date not null,
+	end_date date not null,
+	date_added datetime not null,
+	last_updated datetime not null,
+	primary key (id),
+	index (business_id, uuid, last_updated)
+) ENGINE='InnoDB', COMMENT='v1.01';

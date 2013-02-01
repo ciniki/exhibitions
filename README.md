@@ -1,8 +1,8 @@
 Ciniki - Small Business Management Platform
 ===========================================
 
-The projects module is a simple project management interface.  It is
-comprised of multiple elements from other modules.
+The exhibitions modules stores information about exhibitions, shows,
+or festivals.
 
 License
 -------

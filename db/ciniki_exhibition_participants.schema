@@ -1,0 +1,69 @@
+#
+# Description
+# -----------
+# The contacts who are a part of the exhibition.  Organizers, Volunteers, Vendors and Sponsors
+# can be included, and one contact can have multiple roles.  
+#
+# This information will be used for various sections of the website.
+#
+# Fields
+# ------
+# id:				The ID for the participant.
+# uuid:				The Universal Unique ID for the participant.
+# business_id:		The ID of the business the exhibition is a part of.
+#
+# exhibition_id:	The ID of the exhibition the participant is a part of.
+# contact_id:		The ID of the contact from the ciniki_exhibition_contacts table.
+#
+# category:			Used when exhibition has different participant types.  For organizers,
+#					this is used for Staff, Volunteers, etc...
+#
+# type:				The type of participant.  This can be used as categories.
+#
+#					0 - unknown
+#					0x01 - organizer
+#					0x02 - volunteers
+#					0x04 - 
+#					0x08 - 
+#					0x10 - exhibitor
+#					0x20 - sponsor
+#					0x40 - 
+#					0x80 - 
+#
+# status:			The current status of the participant
+#
+#					0 - unknown
+#					1 - applied
+#					10 - accepted
+#					60 - rejected
+#
+# webflags:			The flags to displaying the image on the website.
+#
+#					0x01 - Private (do not show on website)
+#
+# title:			The participant title, used for organizers and voluteers.
+#
+# location:			The location or booth number of the participant in the exhibition.  Can
+#					be map coordinates, or other reference to their location.
+# 
+# date_added:		The UTC date and time the participant was added.
+# last_updated:		The UTC date and time the participant was last updated.
+#
+create table ciniki_exhibition_participants (
+	id int not null auto_increment,
+	uuid char(36) not null,
+	business_id int not null,
+	exhibition_id int not null,
+	contact_id int not null,
+	category varchar(200) not null,
+	type tinyint unsigned not null,
+	status tinyint unsigned not null,
+	webflags tinyint unsigned not null,
+	title varchar(150) not null,
+	location varchar(150) not null,
+	date_added datetime not null,
+	last_updated datetime not null,
+	primary key (id),
+	index (exhibition_id, contact_id),
+	index (business_id, uuid, last_updated)
+) ENGINE='InnoDB', COMMENT='v1.01';
