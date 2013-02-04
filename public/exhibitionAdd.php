@@ -41,7 +41,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
     $args = $rc['args'];
 
 	if( !isset($args['permalink']) || $args['permalink'] == '' ) {
-		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args[    'name'])));
+		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['name'])));
 	}
 
     //  
@@ -92,7 +92,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
 	}
-	$uuid = $rc['uuid'];
+	$args['uuid'] = $rc['uuid'];
 
 	//
 	// Add the exhibition to the database
@@ -100,7 +100,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
 	$strsql = "INSERT INTO ciniki_exhibitions (uuid, business_id, "
 		. "name, permalink, type, description, tagline, start_date, end_date, "
 		. "date_added, last_updated) VALUES ("
-		. "'" . ciniki_core_dbQuote($ciniki, $uuid) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['uuid']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['name']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "', "
@@ -122,15 +122,10 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
 	$exhibition_id = $rc['insert_id'];
 
 	//
-	// Add the uuid to the history
-	//
-	$rc = ciniki_core_dbAddModuleHistory($ciniki, 'ciniki.exhibitions', 'ciniki_exhibition_history', 
-		$args['business_id'], 1, 'ciniki_exhibitions', $exhibition_id, 'uuid', $uuid);
-
-	//
 	// Add all the fields to the change log
 	//
 	$changelog_fields = array(
+		'uuid',
 		'name',
 		'permalink',
 		'type',

@@ -20,7 +20,7 @@
 #
 # type:				The type of participant.  This can be used as categories.
 #
-#					0 - unknown
+#					0 - Unknown (Default for a plain contact)
 #					0x01 - organizer
 #					0x02 - volunteers
 #					0x04 - 

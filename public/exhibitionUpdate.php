@@ -57,16 +57,18 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
 	//
 	// Check the permalink doesn't already exist
 	//
-	$strsql = "SELECT id, name, permalink FROM ciniki_exhibitions "
-		. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
-		. "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
-		. "";
-	$rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'exhibition');
-	if( $rc['stat'] != 'ok' ) {
-		return $rc;
-	}
-	if( $rc['num_rows'] > 0 ) {
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'128', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
+	if( isset($args['permalink']) ) {
+		$strsql = "SELECT id, name, permalink FROM ciniki_exhibitions "
+			. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+			. "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
+			. "";
+		$rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'exhibition');
+		if( $rc['stat'] != 'ok' ) {
+			return $rc;
+		}
+		if( $rc['num_rows'] > 0 ) {
+			return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'128', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
+		}
 	}
 
 	//  
