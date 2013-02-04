@@ -53,7 +53,9 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		. "ciniki_exhibition_participants.category, "
 		. "ciniki_exhibition_participants.type, "
 		. "ciniki_exhibition_participants.status, "
+		. "ciniki_exhibition_participants.status AS status_text, "
 		. "ciniki_exhibition_participants.webflags, "
+		. "if((ciniki_exhibition_participants.webflags&0x01)=1,'Hidden','Visible') AS webvisible, "
 		. "ciniki_exhibition_participants.title, "
 		. "ciniki_exhibition_participants.location, "
 		. "ciniki_exhibition_contacts.id AS contact_id, "
@@ -75,7 +77,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 			. "ciniki_exhibition_contact_images.name AS image_name, "
 			. "ciniki_exhibition_contact_images.webflags AS image_webflags, "
 			. "ciniki_exhibition_contact_images.image_id, "
-			. "ciniki_exhibition_contact_images.description AS image_description "
+			. "ciniki_exhibition_contact_images.description AS image_description, "
 			. "ciniki_exhibition_contact_images.url AS image_url "
 			. "";
 	}
@@ -97,14 +99,16 @@ function ciniki_exhibitions_participantGet($ciniki) {
 	// Check if we need to include thumbnail images
 	//
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');
+	$statuses = array('0'=>'Unknown', '1'=>'Applied', '10'=>'Accepted', '60'=>'Rejected');
 	if( isset($args['images']) && $args['images'] == 'yes' ) {
 		$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 			array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
 				'fields'=>array('id', 'exhibition_id', 'category', 'type', 'status',
-					'webflags', 'title', 'location', 
+					'status_text', 'webflags', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 'primary_image_id',
-					'description', 'notes')),
+					'description', 'notes'),
+				'maps'=>array('status_text'=>$statuses)),
 			array('container'=>'images', 'fname'=>'img_id', 'name'=>'image',
 				'fields'=>array('id'=>'img_id', 'name'=>'image_name', 'webflags'=>'image_webflags',
 					'image_id', 'description'=>'image_description', 'url'=>'image_url')),
@@ -116,6 +120,9 @@ function ciniki_exhibitions_participantGet($ciniki) {
 			return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'164', 'msg'=>'Unable to find participant'));
 		}
 		$participant = $rc['participants'][0]['participant'];
+		if( !isset($participant['images']) ) {
+			$participant['images'] = array();
+		}
 		ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'loadCacheThumbnail');
 		foreach($participant['images'] as $img_id => $img) {
 			if( isset($img['image']['image_id']) && $img['image']['image_id'] > 0 ) {
@@ -130,10 +137,11 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 			array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
 				'fields'=>array('id', 'exhibition_id', 'category', 'type', 'status',
-					'webflags', 'title', 'location', 
+					'status_text', 'webflags', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 'primary_image_id',
-					'description', 'notes')),
+					'description', 'notes'),
+				'maps'=>array('status_text'=>$statuses)),
 		));
 		if( $rc['stat'] != 'ok' ) {
 			return $rc;

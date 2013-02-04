@@ -41,15 +41,6 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
     }   
     $args = $rc['args'];
 
-
-// 	FIXME: Check for change in first/last/company and update permalink if necessary
-//
-//	Get the existing record to see if first/last/company changed
-//
-//	if( $args['first'] == '' && $args['last'] == '' && $args['company'] == '' ) {
-//		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'169', 'msg'=>'You must specify a name or company'));
-//	}
-
 	if( isset($args['name']) && (!isset($args['permalink']) || $args['permalink'] == '') ) {
 		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args[    'name'])));
 	}
@@ -77,7 +68,7 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 			return $rc;
 		}
 		if( $rc['num_rows'] > 0 ) {
-			return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'128', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
+			return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'218', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
 		}
 	}
 
@@ -134,7 +125,7 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 	}
 	if( !isset($rc['num_affected_rows']) || $rc['num_affected_rows'] != 1 ) {
 		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'129', 'msg'=>'Unable to update exhibition'));	
+		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'219', 'msg'=>'Unable to update exhibition'));	
 	}
 
 	//
