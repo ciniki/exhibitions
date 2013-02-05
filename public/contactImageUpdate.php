@@ -41,7 +41,7 @@ function ciniki_exhibitions_contactImageUpdate(&$ciniki) {
 		$strsql = "SELECT id, name, permalink FROM ciniki_exhibition_contact_images "
 			. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
 			. "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
-			. "AND id <> '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
+			. "AND id <> '" . ciniki_core_dbQuote($ciniki, $args['contact_image_id']) . "' "
 			. "";
 		$rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
 		if( $rc['stat'] != 'ok' ) {
