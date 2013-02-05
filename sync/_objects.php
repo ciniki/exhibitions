@@ -33,6 +33,7 @@ function ciniki_exhibitions_sync_objects(&$ciniki, &$sync, $business_id, $args) 
 			'exhibition_id'=>array('ref'=>'ciniki.exhibitions.exhibition'),
 			'name'=>array(),
 			'permalink'=>array(),
+			'category'=>array(),
 			'webflags'=>array(),
 			'image_id'=>array('ref'=>'ciniki.images.image'),
 			'description'=>array(),

@@ -1,0 +1,5 @@
+#
+# This will add the category feature to the exhibition images
+#
+ALTER TABLE ciniki_exhibition_images ADD COLUMN category varchar(150) not null AFTER permalink;
+ALTER TABLE ciniki_exhibition_images COMMENT='v1.02';

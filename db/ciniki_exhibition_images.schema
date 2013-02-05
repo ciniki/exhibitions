@@ -12,6 +12,7 @@
 # exhibition_id:		The ID of the exhibition the image is attached to.
 # name:					The name or title of the image.
 # permalink:			The permalink of the image to be used in the URL.
+# category:				The category or Album the images belong to.
 # webflags:				Specify if the image should be displayed on the website.
 #
 #						0x01 - Private (do not display on website)
@@ -30,6 +31,7 @@ create table ciniki_exhibition_images (
 	exhibition_id int not null,
 	name varchar(150) not null,
 	permalink varchar(200) not null,
+	category varchar(150) not null,
 	webflags tinyint unsigned not null,
 	image_id int not null,
 	description varchar(6000) not null,
@@ -38,4 +40,4 @@ create table ciniki_exhibition_images (
 	primary key (id),
 	index (exhibition_id, image_id),
 	index (business_id, uuid, last_updated)
-) ENGINE='InnoDB', COMMENT='v1.01';
+) ENGINE='InnoDB', COMMENT='v1.02';
