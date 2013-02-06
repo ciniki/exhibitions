@@ -23,7 +23,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
         'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
         'exhibition_image_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition Image'), 
 		'image_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Image'),
-        'name'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Title'), 
+        'name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Title'), 
         'permalink'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Permalink'), 
         'category'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Category'), 
         'webflags'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Website Flags'), 
@@ -35,7 +35,22 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
     $args = $rc['args'];
 
 	if( isset($args['name']) ) {
-		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['name'])));
+		if( $args['name'] != '' ) { 
+			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['name'])));
+		} else {
+			$strsql = "SELECT uuid FROM ciniki_exhibition_images "
+				. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+				. "AND id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
+				. "";
+			$rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
+			if( $rc['stat'] != 'ok' ) {
+				return $rc;
+			}
+			if( !isset($rc['image']) ) {
+				return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'257', 'msg'=>'Unable to update image'));
+			}
+			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($rc['image']['uuid'])));
+		}
 		//
 		// Make sure the permalink is unique
 		//
@@ -51,7 +66,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
 		if( $rc['num_rows'] > 0 ) {
 			return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'255', 'msg'=>'You already have an image with this name, please choose another name'));
 		}
-	}
+	} 
 
     //  
     // Make sure this module is activated, and
@@ -92,7 +107,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
 		'description',
 		);
 	foreach($changelog_fields as $field) {
-		if( isset($args[$field]) && $args[$field] != '' ) {
+		if( isset($args[$field]) ) {
 			$strsql .= ", $field = '" . ciniki_core_dbQuote($ciniki, $args[$field]) . "' ";
 			$rc = ciniki_core_dbAddModuleHistory($ciniki, 'ciniki.exhibitions', 
 				'ciniki_exhibition_history', $args['business_id'], 

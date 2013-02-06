@@ -19,7 +19,7 @@ function ciniki_exhibitions_imageAdd(&$ciniki) {
         'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
         'exhibition_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition'), 
 		'image_id'=>array('required'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
-        'name'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Title'), 
+        'name'=>array('required'=>'yes', 'blank'=>'yes', 'name'=>'Title'), 
         'permalink'=>array('required'=>'no', 'default'=>'', 'blank'=>'yes', 'name'=>'Permalink'), 
         'category'=>array('required'=>'no', 'default'=>'', 'blank'=>'yes', 'name'=>'Category'), 
         'webflags'=>array('required'=>'no', 'default'=>'0', 'blank'=>'yes', 'name'=>'Website Flags'), 
@@ -29,10 +29,6 @@ function ciniki_exhibitions_imageAdd(&$ciniki) {
         return $rc;
     }   
     $args = $rc['args'];
-
-	if( !isset($args['permalink']) || $args['permalink'] == '' ) {
-		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['name'])));
-	}
 
 	if( $args['exhibition_id'] <= 0 ) {
 		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'228', 'msg'=>'No exhibition specified'));
@@ -64,6 +60,24 @@ function ciniki_exhibitions_imageAdd(&$ciniki) {
 	}   
 
 	//
+	// Get a new UUID, do this first so it can be used as permalink if necessary
+	//
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbUUID');
+	$rc = ciniki_core_dbUUID($ciniki, 'ciniki.exhibitions');
+	if( $rc['stat'] != 'ok' ) {
+		return $rc;
+	}
+	$args['uuid'] = $rc['uuid'];
+
+	if( !isset($args['permalink']) || $args['permalink'] == '' ) {
+		if( isset($args['name']) && $args['name'] != '' ) {
+			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['name'])));
+		} else {
+			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['uuid'])));
+		}
+	}
+
+	//
 	// Check the permalink doesn't already exist
 	//
 	$strsql = "SELECT id, name, permalink FROM ciniki_exhibition_images "
@@ -77,16 +91,6 @@ function ciniki_exhibitions_imageAdd(&$ciniki) {
 	if( $rc['num_rows'] > 0 ) {
 		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'230', 'msg'=>'You already have an image with this name, please choose another name'));
 	}
-
-	//
-	// Get a new UUID
-	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbUUID');
-	$rc = ciniki_core_dbUUID($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) {
-		return $rc;
-	}
-	$args['uuid'] = $rc['uuid'];
 
 	//
 	// Add the image to the database
