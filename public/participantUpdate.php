@@ -24,12 +24,12 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
         'exhibition_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition'), 
 		'participant_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Participant'),
         'contact_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Contact'), 
-		'category'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Category'),
-		'type'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Type'),
-		'status'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'status'),
-		'webflags'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Web Flags'),
-		'title'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Title'),
-		'location'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Location'),
+		'category'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Category'),
+		'type'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'no', 'name'=>'Type'),
+		'status'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'status'),
+		'webflags'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Web Flags'),
+		'title'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Title'),
+		'location'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Location'),
         )); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
