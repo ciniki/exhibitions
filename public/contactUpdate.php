@@ -33,6 +33,7 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 		'phone_fax'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Fax'),
 		'url'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Website'),
 		'primary_image_id'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
+		'short_description'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Short Description'),
 		'description'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Description'),
 		'notes'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Notes'),
         )); 
@@ -104,6 +105,7 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 		'phone_fax',
 		'url',
 		'primary_image_id',
+		'short_description',
 		'description',
 		'notes',
 		);

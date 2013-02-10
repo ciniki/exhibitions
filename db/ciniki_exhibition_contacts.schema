@@ -22,6 +22,7 @@
 # phone_fax:		The fax number of the contact.
 # url:				The contacts website url.
 # primary_image_id:	The ID of the image in ciniki.images to use as the contact's image.
+# description:		The short description for use in lists.
 # description:		The description/bio of the contact.
 # notes:			The private notes about the contact.
 #
@@ -44,6 +45,7 @@ create table ciniki_exhibition_contacts (
 	phone_fax varchar(50) not null,
 	url varchar(255) not null,
 	primary_image_id int not null,
+	short_description varchar(1000) not null,
 	description varchar(10000) not null,
 	notes varchar(6000) not null,
 	date_added datetime not null,
@@ -51,5 +53,6 @@ create table ciniki_exhibition_contacts (
 	primary key (id),
 	index (first, last, company),
 	index (email, passcode),
-	index (business_id, uuid, last_updated)
-) ENGINE='InnoDB', COMMENT='v1.01';
+	index (business_id, uuid, last_updated),
+	unique index permalink (business_id, permalink)
+) ENGINE='InnoDB', COMMENT='v1.02';

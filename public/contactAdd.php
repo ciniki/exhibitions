@@ -32,6 +32,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		'phone_fax'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Fax'),
 		'url'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Website'),
 		'primary_image_id'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
+		'short_description'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Short Description'),
 		'description'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Description'),
 		'notes'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Notes'),
         )); 
@@ -113,7 +114,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 	$strsql = "INSERT INTO ciniki_exhibition_contacts (uuid, business_id, "
 		. "first, last, company, permalink, email, "
 		. "phone_home, phone_work, phone_cell, phone_fax, url, "
-		. "primary_image_id, description, notes, "
+		. "primary_image_id, short_description, description, notes, "
 		. "date_added, last_updated) VALUES ("
 		. "'" . ciniki_core_dbQuote($ciniki, $args['uuid']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "', "
@@ -128,6 +129,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_fax']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['url']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['primary_image_id']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['short_description']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['description']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['notes']) . "', "
 		. "UTC_TIMESTAMP(), UTC_TIMESTAMP())";
@@ -158,6 +160,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		'phone_fax',
 		'url',
 		'primary_image_id',
+		'short_description',
 		'description',
 		'notes',
 		);

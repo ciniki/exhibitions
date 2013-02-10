@@ -69,6 +69,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		. "ciniki_exhibition_contacts.phone_fax, "
 		. "ciniki_exhibition_contacts.url, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
+		. "ciniki_exhibition_contacts.short_description, "
 		. "ciniki_exhibition_contacts.description, "
 		. "ciniki_exhibition_contacts.notes ";
 	if( isset($args['images']) && $args['images'] == 'yes' ) {
@@ -107,7 +108,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 					'status_text', 'webflags', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 'primary_image_id',
-					'description', 'notes'),
+					'short_description', 'description', 'notes'),
 				'maps'=>array('status_text'=>$statuses)),
 			array('container'=>'images', 'fname'=>'img_id', 'name'=>'image',
 				'fields'=>array('id'=>'img_id', 'name'=>'image_name', 'webflags'=>'image_webflags',
@@ -140,7 +141,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 					'status_text', 'webflags', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 'primary_image_id',
-					'description', 'notes'),
+					'short_description', 'description', 'notes'),
 				'maps'=>array('status_text'=>$statuses)),
 		));
 		if( $rc['stat'] != 'ok' ) {
