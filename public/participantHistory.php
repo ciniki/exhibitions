@@ -41,7 +41,7 @@ function ciniki_exhibitions_participantHistory($ciniki) {
 	//
 	// Check access to business_id as owner, or sys admin
 	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'customers', 'private', 'checkAccess');
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
 	$rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.participantHistory', 0);
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;

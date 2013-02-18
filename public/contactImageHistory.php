@@ -2,14 +2,14 @@
 //
 // Description
 // -----------
-// This function will return the history for an element in the contact.
+// This function will return the history for an element in the contact images.
 //
 // Arguments
 // ---------
 // api_key:
 // auth_token:
 // business_id:			The ID of the business to get the history for.
-// contact_id:			The ID of the exhibition to get the history for.
+// contact_image_id:	The ID of the contact image to get the history for.
 // field:				The field to get the history for.
 //
 // Returns
@@ -23,14 +23,14 @@
 //		...
 //	</users>
 //
-function ciniki_exhibitions_contactHistory($ciniki) {
+function ciniki_exhibitions_contactImageHistory($ciniki) {
 	//
 	// Find all the required and optional arguments
 	//
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
 	$rc = ciniki_core_prepareArgs($ciniki, 'no', array(
 		'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
-		'contact_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Participant'), 
+		'contact_image_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Image'), 
 		'field'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Field'), 
 		));
 	if( $rc['stat'] != 'ok' ) {
@@ -42,12 +42,12 @@ function ciniki_exhibitions_contactHistory($ciniki) {
 	// Check access to business_id as owner, or sys admin
 	//
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-	$rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.contactHistory', 0);
+	$rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.contactImageHistory', 0);
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
 	}
 
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbGetModuleHistory');
-	return ciniki_core_dbGetModuleHistory($ciniki, 'ciniki.exhibitions', 'ciniki_exhibition_history', $args['business_id'], 'ciniki_exhibition_contacts', $args['contact_id'], $args['field']);
+	return ciniki_core_dbGetModuleHistory($ciniki, 'ciniki.exhibitions', 'ciniki_exhibition_history', $args['business_id'], 'ciniki_exhibition_contact_images', $args['contact_image_id'], $args['field']);
 }
 ?>

@@ -41,10 +41,18 @@ function ciniki_exhibitions_exhibitionHistory($ciniki) {
 	//
 	// Check access to business_id as owner, or sys admin
 	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'customers', 'private', 'checkAccess');
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
 	$rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.exhibitionHistory', 0);
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
+	}
+
+	if( $args['field'] == 'start_date' 
+		|| $args['field'] == 'end_date' ) {
+		ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbGetModuleHistoryReformat');
+		return ciniki_core_dbGetModuleHistoryReformat($ciniki, 'ciniki.exhibitions', 
+			'ciniki_exhibition_history', $args['business_id'], 'ciniki_exhibitions', 
+			$args['exhibition_id'], $args['field'], 'date');
 	}
 
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbGetModuleHistory');
