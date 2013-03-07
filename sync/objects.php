@@ -24,7 +24,7 @@ function ciniki_exhibitions_sync_objects(&$ciniki, &$sync, $business_id, $args) 
 			'start_date'=>array(),
 			'end_date'=>array(),
 			),
-		'details'=>array('key'=>'exhibition_id', 'table=>'ciniki_exhibition_details'),
+		'details'=>array('key'=>'exhibition_id', 'table'=>'ciniki_exhibition_details'),
 		'history_table'=>'ciniki_exhibition_history',
 		);
 	$objects['image'] = array(
