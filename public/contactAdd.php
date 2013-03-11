@@ -173,6 +173,20 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 	}
 
 	//
+	// Add image reference
+	//
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refAdd');
+	$rc = ciniki_images_refAdd($ciniki, $args['business_id'], array(
+		'image_id'=>$args['primary_image_id'], 
+		'object'=>'ciniki.exhibitions.contact', 
+		'object_id'=>$contact_id,
+		'object_field'=>'primary_image_id'));
+	if( $rc['stat'] != 'ok' ) {
+		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
+		return $rc;
+	}
+
+	//
 	// Commit the database changes
 	//
     $rc = ciniki_core_dbTransactionCommit($ciniki, 'ciniki.exhibitions');

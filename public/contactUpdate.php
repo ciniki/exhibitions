@@ -73,6 +73,22 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 		}
 	}
 
+	//
+	// Get the existing image details
+	//
+	$strsql = "SELECT uuid, primary_image_id FROM ciniki_exhibition_contacts "
+		. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+		. "AND id = '" . ciniki_core_dbQuote($ciniki, $args['contact_id']) . "' "
+		. "";
+	$rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'item');
+	if( $rc['stat'] != 'ok' ) {
+		return $rc;
+	}
+	if( !isset($rc['item']) ) {
+		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'392', 'msg'=>'Contact image not found'));
+	}
+	$item = $rc['item'];
+
 	//  
 	// Turn off autocommit
 	//  
@@ -128,6 +144,37 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 	if( !isset($rc['num_affected_rows']) || $rc['num_affected_rows'] != 1 ) {
 		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
 		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'219', 'msg'=>'Unable to update exhibition'));	
+	}
+
+	//
+	// Update image reference
+	//
+	if( isset($args['primary_image_id']) && $item['primary_image_id'] != $args['primary_image_id']) {
+		//
+		// Remove the old reference
+		//
+		ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refClear');
+		$rc = ciniki_images_refClear($ciniki, $args['business_id'], array(
+			'object'=>'ciniki.exhibitions.contact', 
+			'object_id'=>$args['contact_id']));
+		if( $rc['stat'] == 'fail' ) {
+			ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
+			return $rc;
+		}
+
+		//
+		// Add the new reference
+		//
+		ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refAdd');
+		$rc = ciniki_images_refAdd($ciniki, $args['business_id'], array(
+			'image_id'=>$args['primary_image_id'], 
+			'object'=>'ciniki.exhibitions.contact', 
+			'object_id'=>$args['contact_id'],
+			'object_field'=>'primary_image_id'));
+		if( $rc['stat'] != 'ok' ) {
+			ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
+			return $rc;
+		}
 	}
 
 	//
