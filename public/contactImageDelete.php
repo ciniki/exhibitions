@@ -64,7 +64,7 @@ function ciniki_exhibitions_contactImageDelete(&$ciniki) {
 	}
 	if( !isset($rc['item']) ) {
 		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'483', 'msg'=>'Contact image does not exist'));
+		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'486', 'msg'=>'Contact image does not exist'));
 	}
 	$item = $rc['item'];
 

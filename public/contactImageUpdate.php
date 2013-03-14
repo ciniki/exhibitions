@@ -45,7 +45,7 @@ function ciniki_exhibitions_contactImageUpdate(&$ciniki) {
 		return $rc;
 	}
 	if( !isset($rc['item']) ) {
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'392', 'msg'=>'Contact image not found'));
+		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'485', 'msg'=>'Contact image not found'));
 	}
 	$item = $rc['item'];
 
