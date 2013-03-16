@@ -16,7 +16,8 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS name, "
 		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.short_description, "
-		. "ciniki_exhibition_contacts.primary_image_id "
+		. "ciniki_exhibition_contacts.primary_image_id, "
+		. "ciniki_exhibition_contacts.url "
 		. "FROM ciniki_exhibition_contacts "
 		. "LEFT JOIN ciniki_exhibition_participants ON ("
 			. "ciniki_exhibition_contacts.id = ciniki_exhibition_participants.contact_id "
@@ -41,7 +42,7 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 			'fields'=>array('name'=>'category')),
 		array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
 			'fields'=>array('id', 'name', 'image_id'=>'primary_image_id', 
-				'permalink', 'description'=>'short_description')),
+				'permalink', 'description'=>'short_description', 'url')),
 		));
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
