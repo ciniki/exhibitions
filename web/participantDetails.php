@@ -14,13 +14,16 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 	$strsql = "SELECT ciniki_exhibition_participants.id, "
 		. "CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last) AS contact, "
 		. "ciniki_exhibition_contacts.company, "
+		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.url, "
 		. "ciniki_exhibition_contacts.description, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
 		. "ciniki_exhibition_contact_images.image_id, "
 		. "ciniki_exhibition_contact_images.name AS image_name, "
+		. "ciniki_exhibition_contact_images.permalink AS image_permalink, "
 		. "ciniki_exhibition_contact_images.description AS image_description, "
-		. "ciniki_exhibition_contact_images.url AS image_url "
+		. "ciniki_exhibition_contact_images.url AS image_url, "
+		. "UNIX_TIMESTAMP(ciniki_exhibition_contact_images.last_updated) AS image_last_updated "
 		. "FROM ciniki_exhibition_contacts "
 		. "LEFT JOIN ciniki_exhibition_participants ON ("
 			. "ciniki_exhibition_contacts.id = ciniki_exhibition_participants.contact_id "
@@ -41,22 +44,23 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 			. "OR ((type&0x20) = 0x20) "
 			. ") "
 		. "";
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');
-	$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
-		array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
-			'fields'=>array('id', 'contact', 'company', 'image_id'=>'primary_image_id', 
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryIDTree');
+	$rc = ciniki_core_dbHashQueryIDTree($ciniki, $strsql, 'ciniki.exhibitions', array(
+		array('container'=>'participants', 'fname'=>'id', 
+			'fields'=>array('id', 'permalink', 'contact', 'company', 'image_id'=>'primary_image_id', 
 				'url', 'description')),
-		array('container'=>'images', 'fname'=>'image_id', 'name'=>'image',
-			'fields'=>array('image_id', 'title'=>'image_name', 
-				'description'=>'image_description', 'url'=>'image_url')),
+		array('container'=>'images', 'fname'=>'image_id', 
+			'fields'=>array('image_id', 'title'=>'image_name', 'permalink'=>'image_permalink',
+				'description'=>'image_description', 'url'=>'image_url',
+				'last_updated'=>'image_last_updated')),
 		));
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
 	}
-	if( !isset($rc['participants']) || !isset($rc['participants'][0]) ) {
+	if( !isset($rc['participants']) || count($rc['participants']) < 1 ) {
 		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'278', 'msg'=>'Unable to find participant'));
 	}
-	$participant = $rc['participants'][0]['participant'];
+	$participant = array_pop($rc['participants']);
 
 	if( isset($participant['company']) && $participant['company'] != '' ) {
 		$participant['name'] = $participant['company'];
