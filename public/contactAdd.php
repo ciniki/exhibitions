@@ -31,7 +31,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		'phone_cell'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Cell'),
 		'phone_fax'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Fax'),
 		'url'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Website'),
-		'primary_image_id'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
+		'primary_image_id'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
 		'short_description'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Short Description'),
 		'description'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Description'),
 		'notes'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Notes'),
@@ -175,15 +175,17 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 	//
 	// Add image reference
 	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refAdd');
-	$rc = ciniki_images_refAdd($ciniki, $args['business_id'], array(
-		'image_id'=>$args['primary_image_id'], 
-		'object'=>'ciniki.exhibitions.contact', 
-		'object_id'=>$contact_id,
-		'object_field'=>'primary_image_id'));
-	if( $rc['stat'] != 'ok' ) {
-		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return $rc;
+	if( $args['primary_image_id'] != '' && $args['primary_image_id'] != '0' ) {
+		ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refAdd');
+		$rc = ciniki_images_refAdd($ciniki, $args['business_id'], array(
+			'image_id'=>$args['primary_image_id'], 
+			'object'=>'ciniki.exhibitions.contact', 
+			'object_id'=>$contact_id,
+			'object_field'=>'primary_image_id'));
+		if( $rc['stat'] != 'ok' ) {
+			ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
+			return $rc;
+		}
 	}
 
 	//
