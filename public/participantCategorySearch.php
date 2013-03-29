@@ -23,7 +23,7 @@ function ciniki_exhibitions_participantCategorySearch($ciniki) {
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
         'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
         'exhibition_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Exhibition'), 
-        'start_needle'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Search String'), 
+        'start_needle'=>array('required'=>'yes', 'blank'=>'yes', 'name'=>'Search String'), 
         'limit'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Limit'), 
         )); 
     if( $rc['stat'] != 'ok' ) { 
@@ -53,6 +53,7 @@ function ciniki_exhibitions_participantCategorySearch($ciniki) {
 		$strsql .= "AND ciniki_exhibition_participants.exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' ";
 	}
 	$strsql .= "AND ciniki_exhibition_participants.category LIKE '" . ciniki_core_dbQuote($ciniki, $args['start_needle']) . "%' ";
+	$strsql .= "AND ciniki_exhibition_participants.category <> '' ";
 	if( isset($args['limit']) && is_numeric($args['limit']) && $args['limit'] > 0 ) {
 		$strsql .= "LIMIT " . ciniki_core_dbQuote($ciniki, $args['limit']) . " ";	// is_numeric verified
 	} else {
