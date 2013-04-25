@@ -40,11 +40,11 @@ function ciniki_exhibitions_exhibitionList($ciniki) {
 	$date_format = ciniki_users_dateFormat($ciniki);
 	
 	//
-	// Load the upcoming events
+	// Load the exhibitions
 	//
 	$strsql = "SELECT ciniki_exhibitions.id, ciniki_exhibitions.name, "
-		. "DATE_FORMAT(ciniki_exhibitions.start_date, '" . ciniki_core_dbQuote($ciniki, $date_format) . "') AS start_date, "
-		. "DATE_FORMAT(ciniki_exhibitions.end_date, '" . ciniki_core_dbQuote($ciniki, $date_format) . "') AS end_date "
+		. "IFNULL(DATE_FORMAT(ciniki_exhibitions.start_date, '" . ciniki_core_dbQuote($ciniki, $date_format) . "'), '') AS start_date, "
+		. "IFNULL(DATE_FORMAT(ciniki_exhibitions.end_date, '" . ciniki_core_dbQuote($ciniki, $date_format) . "'), '') AS end_date "
 		. "FROM ciniki_exhibitions "
 		. "WHERE ciniki_exhibitions.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
 		. "ORDER BY ciniki_exhibitions.start_date DESC "

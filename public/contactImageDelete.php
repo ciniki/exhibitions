@@ -92,7 +92,7 @@ function ciniki_exhibitions_contactImageDelete(&$ciniki) {
 	}
 
 	ciniki_core_dbAddModuleHistory($ciniki, 'ciniki.exhibitions', 'ciniki_exhibition_history', 
-		$args['business_id'], 1, 'ciniki_exhibition_contact_images', $args['contact_image_id'], '*', '');
+		$args['business_id'], 3, 'ciniki_exhibition_contact_images', $args['contact_image_id'], '*', '');
 
 	//
 	// Commit the database changes
