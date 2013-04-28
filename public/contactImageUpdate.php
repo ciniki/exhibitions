@@ -33,6 +33,16 @@ function ciniki_exhibitions_contactImageUpdate(&$ciniki) {
     }   
     $args = $rc['args'];
 
+    //  
+    // Make sure this module is activated, and
+    // check permission to run this function for this business
+    //  
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.contactImageUpdate'); 
+    if( $rc['stat'] != 'ok' ) { 
+        return $rc;
+    }
+
 	//
 	// Get the existing image details
 	//
@@ -67,16 +77,6 @@ function ciniki_exhibitions_contactImageUpdate(&$ciniki) {
 			return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'179', 'msg'=>'You already have an image with this name, please choose another name'));
 		}
 	}
-
-    //  
-    // Make sure this module is activated, and
-    // check permission to run this function for this business
-    //  
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.contactUpdate', 0); 
-    if( $rc['stat'] != 'ok' ) { 
-        return $rc;
-    }
 
 	//  
 	// Turn off autocommit
