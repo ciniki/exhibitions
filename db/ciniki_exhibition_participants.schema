@@ -27,7 +27,7 @@
 #					0x08 - 
 #					0x10 - exhibitor
 #					0x20 - sponsor
-#					0x40 - 
+#					0x40 - tour (Built for studio tours)
 #					0x80 - 
 #
 # status:			The current status of the participant

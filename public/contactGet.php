@@ -59,6 +59,13 @@ function ciniki_exhibitions_contactGet($ciniki) {
 		. "ciniki_exhibition_contacts.phone_cell, "
 		. "ciniki_exhibition_contacts.phone_fax, "
 		. "ciniki_exhibition_contacts.url, "
+		. "ciniki_exhibition_contacts.address1, "
+		. "ciniki_exhibition_contacts.address2, "
+		. "ciniki_exhibition_contacts.city, "
+		. "ciniki_exhibition_contacts.province, "
+		. "ciniki_exhibition_contacts.postal, "
+		. "ciniki_exhibition_contacts.latitude, "
+		. "ciniki_exhibition_contacts.longitude, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
 		. "ciniki_exhibition_contacts.short_description, "
 		. "ciniki_exhibition_contacts.description, "
@@ -112,8 +119,9 @@ function ciniki_exhibitions_contactGet($ciniki) {
 				'fields'=>array('participant_id', 'contact_id', 'category', 'type', 'status',
 					'webflags', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
-					'phone_work', 'phone_cell', 'phone_fax', 'url', 'primary_image_id',
-					'short_description', 'description', 'notes')),
+					'phone_work', 'phone_cell', 'phone_fax', 'url', 
+					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude',
+					'primary_image_id', 'short_description', 'description', 'notes')),
 			array('container'=>'images', 'fname'=>'img_id', 'name'=>'image',
 				'fields'=>array('id'=>'img_id', 'name'=>'image_name', 'webflags'=>'image_webflags',
 					'image_id', 'description'=>'image_description', 'url'=>'image_url')),
@@ -141,8 +149,9 @@ function ciniki_exhibitions_contactGet($ciniki) {
 				'fields'=>array('participant_id', 'contact_id', 'category', 'type', 'status',
 					'webflags', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
-					'phone_work', 'phone_cell', 'phone_fax', 'url', 'primary_image_id',
-					'short_description', 'description', 'notes')),
+					'phone_work', 'phone_cell', 'phone_fax', 'url', 
+					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude',
+					'primary_image_id', 'short_description', 'description', 'notes')),
 		));
 		if( $rc['stat'] != 'ok' ) {
 			return $rc;

@@ -31,6 +31,13 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		'phone_cell'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Cell'),
 		'phone_fax'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Fax'),
 		'url'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Website'),
+		'address1'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Address 1'),
+		'address2'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Address 2'),
+		'city'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'City'),
+		'province'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Province'),
+		'postal'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Postal'),
+		'latitude'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Latitude'),
+		'longitude'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Longitude'),
 		'primary_image_id'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
 		'short_description'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Short Description'),
 		'description'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Description'),
@@ -50,11 +57,11 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['company'])));
 		} else {
 			if( $args['first'] != '' && $args['last'] != '' ) {
-				$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['first'] . '-' . $args['last'])));
+				$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 \-]/', '', strtolower($args['first'] . '-' . $args['last'])));
 			} elseif( $args['first'] != '' ) {
-				$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['first'])));
+				$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 \-]/', '', strtolower($args['first'])));
 			} elseif( $args['last'] != '' ) {
-				$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['last'])));
+				$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 \-]/', '', strtolower($args['last'])));
 			}
 		}
 	}
@@ -114,6 +121,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 	$strsql = "INSERT INTO ciniki_exhibition_contacts (uuid, business_id, "
 		. "first, last, company, permalink, email, "
 		. "phone_home, phone_work, phone_cell, phone_fax, url, "
+		. "address1, address2, city, province, postal, latitude, longitude, "
 		. "primary_image_id, short_description, description, notes, "
 		. "date_added, last_updated) VALUES ("
 		. "'" . ciniki_core_dbQuote($ciniki, $args['uuid']) . "', "
@@ -128,6 +136,13 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_cell']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_fax']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['url']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['address1']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['address2']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['city']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['province']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['postal']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['latitude']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['longitude']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['primary_image_id']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['short_description']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['description']) . "', "
@@ -159,6 +174,13 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		'phone_cell',
 		'phone_fax',
 		'url',
+		'address1',
+		'address2',
+		'city',
+		'province',
+		'postal',
+		'latitude',
+		'longitude',
 		'primary_image_id',
 		'short_description',
 		'description',

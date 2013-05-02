@@ -16,6 +16,13 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS name, "
 		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.short_description, "
+		. "ciniki_exhibition_contacts.address1, "
+		. "ciniki_exhibition_contacts.address2, "
+		. "ciniki_exhibition_contacts.city, "
+		. "ciniki_exhibition_contacts.province, "
+		. "ciniki_exhibition_contacts.postal, "
+		. "ciniki_exhibition_contacts.latitude, "
+		. "ciniki_exhibition_contacts.longitude, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
 		. "ciniki_exhibition_contacts.url "
 		. "FROM ciniki_exhibition_contacts "
@@ -31,6 +38,8 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 		$strsql .= "AND ((type&0x10) = 0x10 AND status = 10) ";
 	} elseif( $type == 'sponsor' ) {
 		$strsql .= "AND ((type&0x20) = 0x20) ";
+	} elseif( $type == 'tourexhibitor' ) {
+		$strsql .= "AND ((type&0x40) = 0x40) ";
 	} else {
 		return array('stat'=>'ok', 'participants'=>array());
 	}
@@ -42,6 +51,7 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 			'fields'=>array('name'=>'category')),
 		array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
 			'fields'=>array('id', 'name', 'image_id'=>'primary_image_id', 
+				'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
 				'permalink', 'description'=>'short_description', 'url')),
 		));
 	if( $rc['stat'] != 'ok' ) {

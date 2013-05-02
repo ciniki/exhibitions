@@ -16,6 +16,13 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 		. "ciniki_exhibition_contacts.company, "
 		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.url, "
+		. "ciniki_exhibition_contacts.address1, "
+		. "ciniki_exhibition_contacts.address2, "
+		. "ciniki_exhibition_contacts.city, "
+		. "ciniki_exhibition_contacts.province, "
+		. "ciniki_exhibition_contacts.postal, "
+		. "ciniki_exhibition_contacts.latitude, "
+		. "ciniki_exhibition_contacts.longitude, "
 		. "ciniki_exhibition_contacts.description, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
 		. "ciniki_exhibition_contact_images.image_id, "
@@ -42,12 +49,14 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 		. "AND ("
 			. "((type&0x10) = 0x10 AND status = 10) "
 			. "OR ((type&0x20) = 0x20) "
+			. "OR ((type&0x40) = 0x40 AND status = 10) "
 			. ") "
 		. "";
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryIDTree');
 	$rc = ciniki_core_dbHashQueryIDTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 		array('container'=>'participants', 'fname'=>'id', 
 			'fields'=>array('id', 'permalink', 'contact', 'company', 'image_id'=>'primary_image_id', 
+				'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
 				'url', 'description')),
 		array('container'=>'images', 'fname'=>'image_id', 
 			'fields'=>array('image_id', 'title'=>'image_name', 'permalink'=>'image_permalink',

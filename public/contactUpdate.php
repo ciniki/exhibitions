@@ -32,6 +32,13 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 		'phone_cell'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Cell'),
 		'phone_fax'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Fax'),
 		'url'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Website'),
+		'address1'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Address 1'),
+		'address2'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Address 2'),
+		'city'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'City'),
+		'province'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Province'),
+		'postal'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Postal'),
+		'latitude'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Latitude'),
+		'longitude'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Longitude'),
 		'primary_image_id'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
 		'short_description'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Short Description'),
 		'description'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Description'),
@@ -42,10 +49,6 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
     }   
     $args = $rc['args'];
 
-	if( isset($args['name']) && (!isset($args['permalink']) || $args['permalink'] == '') ) {
-		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args[    'name'])));
-	}
-
     //  
     // Make sure this module is activated, and
     // check permission to run this function for this business
@@ -55,6 +58,33 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }
+
+	if( (isset($args['first']) || isset($args['last']) || isset($args['company'])) && (!isset($args['permalink']) || $args['permalink'] == '') ) {
+		if( $args['company'] != '' ) {
+			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['company'])));
+		} elseif( !isset($args['first']) || !isset($args['last']) ) {	
+			//
+			// Get original
+			//
+			$strsql = "SELECT first, last "
+				. "FROM ciniki_exhibition_contacts "
+				. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+				. "AND id = '" . ciniki_core_dbQuote($ciniki, $args['contact_id']) . "' "
+				. "";
+			$rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'contact');
+			if( $rc['stat'] != 'ok' ) {
+				return $rc;
+			}
+			if( !isset($args['first']) ) {
+				$name = $rc['contact']['first'] . '-' . $args['last'];
+			} else {
+				$name = $args['first'] . '-' . $rc['contact']['last'];
+			}
+		} else {
+			$name = $args['first'] . '-' . $args['last'];
+		}
+		$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 \-]/', '', strtolower($name)));
+	}
 
 	//
 	// Check the permalink doesn't already exist
@@ -120,6 +150,13 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 		'phone_cell',
 		'phone_fax',
 		'url',
+		'address1',
+		'address2',
+		'city',
+		'province',
+		'postal',
+		'latitude',
+		'longitude',
 		'primary_image_id',
 		'short_description',
 		'description',
