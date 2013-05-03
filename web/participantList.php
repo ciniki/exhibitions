@@ -39,7 +39,7 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 	} elseif( $type == 'sponsor' ) {
 		$strsql .= "AND ((type&0x20) = 0x20) ";
 	} elseif( $type == 'tourexhibitor' ) {
-		$strsql .= "AND ((type&0x40) = 0x40) ";
+		$strsql .= "AND ((type&0x40) = 0x40 AND status = 10) ";
 	} else {
 		return array('stat'=>'ok', 'participants'=>array());
 	}
