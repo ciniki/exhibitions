@@ -61,7 +61,7 @@ function ciniki_exhibitions_contactUpdate(&$ciniki) {
 
 	if( (isset($args['first']) || isset($args['last']) || isset($args['company'])) && (!isset($args['permalink']) || $args['permalink'] == '') ) {
 		if( $args['company'] != '' ) {
-			$args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['company'])));
+			$name = $args['company'];
 		} elseif( !isset($args['first']) || !isset($args['last']) ) {	
 			//
 			// Get original
