@@ -37,6 +37,9 @@
 #					10 - accepted
 #					60 - rejected
 #
+# level:			The level of sponsorship.  The names for the exhibition
+#					levels are stored in the ciniki_exhibition_details table.
+#
 # webflags:			The flags to displaying the image on the website.
 #
 #					0x01 - Private (do not show on website)
@@ -59,6 +62,7 @@ create table ciniki_exhibition_participants (
 	type tinyint unsigned not null,
 	status tinyint unsigned not null,
 	webflags tinyint unsigned not null,
+	level tinyint unsigned not null,
 	title varchar(150) not null,
 	location varchar(150) not null,
 	date_added datetime not null,
@@ -66,4 +70,4 @@ create table ciniki_exhibition_participants (
 	primary key (id),
 	index (exhibition_id, contact_id),
 	index (business_id, uuid, last_updated)
-) ENGINE='InnoDB', COMMENT='v1.01';
+) ENGINE='InnoDB', COMMENT='v1.02';

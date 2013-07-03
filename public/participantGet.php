@@ -55,6 +55,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		. "ciniki_exhibition_participants.status, "
 		. "ciniki_exhibition_participants.status AS status_text, "
 		. "ciniki_exhibition_participants.webflags, "
+		. "ciniki_exhibition_participants.level, "
 		. "if((ciniki_exhibition_participants.webflags&0x01)=1,'Hidden','Visible') AS webvisible, "
 		. "ciniki_exhibition_participants.title, "
 		. "ciniki_exhibition_participants.location, "
@@ -112,7 +113,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 			array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
 				'fields'=>array('id', 'exhibition_id', 'category', 'type', 'status',
-					'status_text', 'webflags', 'webvisible', 'title', 'location', 
+					'status_text', 'webflags', 'level', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 
 					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
@@ -146,7 +147,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 			array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
 				'fields'=>array('id', 'exhibition_id', 'category', 'type', 'status',
-					'status_text', 'webflags', 'webvisible', 'title', 'location', 
+					'status_text', 'webflags', 'level', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 
 					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 

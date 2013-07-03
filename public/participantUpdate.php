@@ -28,6 +28,7 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
 		'type'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'no', 'name'=>'Type'),
 		'status'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'status'),
 		'webflags'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Web Flags'),
+		'level'=>array('required'=>'no', 'blank'=>'yes', 'validlist'=>array('10','20','30','40','50'), 'name'=>'Level'),
 		'title'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Title'),
 		'location'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Location'),
         )); 
@@ -72,6 +73,7 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
 		'type',
 		'status',
 		'webflags',
+		'level',
 		'title',
 		'location',
 		);

@@ -27,6 +27,7 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
 		'type'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Type'),
 		'status'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'status'),
 		'webflags'=>array('required'=>'no', 'default'=>'0', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Web Flags'),
+		'level'=>array('required'=>'no', 'default'=>'0', 'blank'=>'yes', 'validlist'=>array('10','20','30','40','50'), 'name'=>'Level'),
 		'title'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Title'),
 		'location'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Location'),
         )); 
@@ -74,7 +75,7 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
 	//
 	$strsql = "INSERT INTO ciniki_exhibition_participants (uuid, business_id, "
 		. "exhibition_id, contact_id, "
-		. "category, type, status, webflags, title, location, "
+		. "category, type, status, webflags, level, title, location, "
 		. "date_added, last_updated) VALUES ("
 		. "'" . ciniki_core_dbQuote($ciniki, $args['uuid']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "', "
@@ -84,6 +85,7 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
 		. "'" . ciniki_core_dbQuote($ciniki, $args['type']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['status']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['webflags']) . "', "
+		. "'" . ciniki_core_dbQuote($ciniki, $args['level']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['title']) . "', "
 		. "'" . ciniki_core_dbQuote($ciniki, $args['location']) . "', "
 		. "UTC_TIMESTAMP(), UTC_TIMESTAMP())";
@@ -109,6 +111,7 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
 		'type',
 		'status',
 		'webflags',
+		'level',
 		'title',
 		'location',
 		);

@@ -34,6 +34,12 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
 		'use-sponsors'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Sponsors'),
 		'exhibitor-label-singular'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Exhibitor Label'),
 		'exhibitor-label-plural'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Exhibitor Label Plural'),
+		// Sponsor levels
+		'sponsor-level-10-name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Sponsor Level 10'),
+		'sponsor-level-20-name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Sponsor Level 20'),
+		'sponsor-level-30-name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Sponsor Level 30'),
+		'sponsor-level-40-name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Sponsor Level 40'),
+		'sponsor-level-50-name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Sponsor Level 50'),
         )); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
@@ -129,6 +135,11 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
 		'use-sponsors',
 		'exhibitor-label-singular',
 		'exhibitor-label-plural',
+		'sponsor-level-10-name',
+		'sponsor-level-20-name',
+		'sponsor-level-30-name',
+		'sponsor-level-40-name',
+		'sponsor-level-50-name',
 		);
 	foreach($detail_keys as $key_name) {
 		if( isset($args[$key_name]) ) {

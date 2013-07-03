@@ -10,6 +10,14 @@
 # exhibitor-name-singular:	Artist, Exhibitor, Vendor
 # exhibitor-name-plural:	Artists, Exhibitors, Vendors
 #
+# The different levels of sponsorship, if they want to use them.
+# 
+# sponsor-level-10-name:	The name for the lowest level of sponsor
+# sponsor-level-20-name: 	Bronze sponsor
+# sponsor-level-30-name:	Silver sponsor
+# sponsor-level-40-name:	Gold Sponsor
+# sponsor-level-50-name:	Platnium Sponsor
+#
 # location-address: The full address for the location of the exhibition
 #
 # Fields

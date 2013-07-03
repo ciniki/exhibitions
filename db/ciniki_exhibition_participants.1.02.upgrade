@@ -1,0 +1,5 @@
+#
+# Add the level column for sponsorship level, may be used for other types in the future.
+#
+ALTER TABLE ciniki_exhibition_participants ADD COLUMN level tinyint not null AFTER webflags;
+ALTER TABLE ciniki_exhibition_participants COMMENT='v1.02';
