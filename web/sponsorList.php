@@ -14,6 +14,9 @@ function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
 	$exhibition_id = $settings['page-exhibitions-exhibition'];
 	$type = 'sponsor';
 
+	
+
+
 	$strsql = "SELECT ciniki_exhibition_participants.id, "
 		. "ciniki_exhibition_participants.category, "
 		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS name, "
@@ -38,7 +41,7 @@ function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');
 	$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 		array('container'=>'levels', 'fname'=>'level', 'name'=>'level',
-			'fields'=>array('name'=>'level')),
+			'fields'=>array('number'=>'level')),
 		array('container'=>'categories', 'fname'=>'category', 'name'=>'category',
 			'fields'=>array('name'=>'category')),
 		array('container'=>'sponsors', 'fname'=>'id', 'name'=>'sponsor',
@@ -51,6 +54,22 @@ function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
 	if( !isset($rc['levels']) ) {
 		return array('stat'=>'ok', 'levels'=>array());
 	}
-	return array('stat'=>'ok', 'levels'=>$rc['levels']);
+	$levels = $rc['levels'];
+
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbDetailsQueryDash');
+	$rc = ciniki_core_dbDetailsQueryDash($ciniki, 'ciniki_exhibition_details', 
+		'exhibition_id', $exhibition_id, 'ciniki.exhibitions', 'details', 'sponsor');
+	if( $rc['stat'] != 'ok' ) {
+		return $rc;
+	}
+	if( isset($rc['details']) ) {
+		foreach($levels as $lnum => $level) {
+			if( isset($rc['details']['sponsor-level-' . $level['level']['number'] . '-name']) ) {
+				$levels[$lnum]['level']['name'] = $rc['details']['sponsor-level-' . $level['level']['number'] . '-name'];
+			}
+		}
+	}
+
+	return array('stat'=>'ok', 'levels'=>$levels);
 }
 ?>
