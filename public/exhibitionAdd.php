@@ -32,6 +32,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
 		// Details
 		'use-exhibitors'=>array('required'=>'no', 'default'=>'yes', 'blank'=>'no', 'name'=>'Exhibitors'),
 		'use-sponsors'=>array('required'=>'no', 'default'=>'yes', 'blank'=>'no', 'name'=>'Sponsors'),
+		'use-tour'=>array('required'=>'no', 'default'=>'yes', 'blank'=>'no', 'name'=>'Tour'),
 		'exhibitor-label-singular'=>array('required'=>'no', 'default'=>'Exhibitor', 'blank'=>'yes', 'name'=>'Exhibitor Label'),
 		'exhibitor-label-plural'=>array('required'=>'no', 'default'=>'Exhibitors', 'blank'=>'yes', 'name'=>'Exhibitor Label Plural'),
 		// Sponsor levels
@@ -89,6 +90,10 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
 	if( $rc['stat'] != 'ok' ) { 
 		return $rc;
 	}   
+
+	//
+	// NOTE: This does NOT use the generic objectAdd function, it's more complicated with the details table
+	//
 
 	//
 	// Get a new UUID
@@ -154,6 +159,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
 	$detail_keys = array(
 		'use-exhibitors',
 		'use-sponsors',
+		'use-tour',
 		'exhibitor-label-singular',
 		'exhibitor-label-plural',
 		'sponsor-level-10-name',

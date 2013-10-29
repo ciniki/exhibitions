@@ -84,7 +84,7 @@ function ciniki_exhibitions_contactGet($ciniki) {
 			. "ciniki_exhibition_contact_images.name AS image_name, "
 			. "ciniki_exhibition_contact_images.webflags AS image_webflags, "
 			. "ciniki_exhibition_contact_images.image_id, "
-			. "ciniki_exhibition_contact_images.description AS image_description "
+			. "ciniki_exhibition_contact_images.description AS image_description, "
 			. "ciniki_exhibition_contact_images.url AS image_url "
 			. "";
 	}

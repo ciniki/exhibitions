@@ -26,6 +26,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		'company'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Company'),
 		'permalink'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Permalink'),
 		'email'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Email'),
+		'passcode'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Passcode'),
 		'phone_home'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Home Phone'),
 		'phone_work'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Work phone'),
 		'phone_cell'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Cell'),
@@ -79,7 +80,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 	//
 	// Check the permalink doesn't already exist
 	//
-	$strsql = "SELECT id, first, last, company, permalink FROM ciniki_exhibition_contacts "
+	$strsql = "SELECT id, permalink FROM ciniki_exhibition_contacts "
 		. "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
 		. "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
 		. "";
@@ -91,143 +92,10 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'171', 'msg'=>'You already have a contact with this name, please choose another name.'));
 	}
 
-	//  
-	// Turn off autocommit
-	//  
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbTransactionStart');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbTransactionRollback');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbTransactionCommit');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbQuote');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbInsert');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbAddModuleHistory');
-	$rc = ciniki_core_dbTransactionStart($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) { 
-		return $rc;
-	}   
-
 	//
-	// Get a new UUID
+	// Add the contact
 	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbUUID');
-	$rc = ciniki_core_dbUUID($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) {
-		return $rc;
-	}
-	$args['uuid'] = $rc['uuid'];
-
-	//
-	// Add the exhibition to the database
-	//
-	$strsql = "INSERT INTO ciniki_exhibition_contacts (uuid, business_id, "
-		. "first, last, company, permalink, email, "
-		. "phone_home, phone_work, phone_cell, phone_fax, url, "
-		. "address1, address2, city, province, postal, latitude, longitude, "
-		. "primary_image_id, short_description, description, notes, "
-		. "date_added, last_updated) VALUES ("
-		. "'" . ciniki_core_dbQuote($ciniki, $args['uuid']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['first']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['last']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['company']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['email']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_home']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_work']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_cell']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['phone_fax']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['url']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['address1']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['address2']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['city']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['province']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['postal']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['latitude']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['longitude']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['primary_image_id']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['short_description']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['description']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['notes']) . "', "
-		. "UTC_TIMESTAMP(), UTC_TIMESTAMP())";
-	$rc = ciniki_core_dbInsert($ciniki, $strsql, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) { 
-		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return $rc;
-	}
-	if( !isset($rc['insert_id']) || $rc['insert_id'] < 1 ) {
-		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'172', 'msg'=>'Unable to add contact'));
-	}
-	$contact_id = $rc['insert_id'];
-
-	//
-	// Add all the fields to the change log
-	//
-	$changelog_fields = array(
-		'uuid',
-		'first',
-		'last',
-		'company',
-		'permalink',
-		'email',
-		'phome_home',
-		'phone_work',
-		'phone_cell',
-		'phone_fax',
-		'url',
-		'address1',
-		'address2',
-		'city',
-		'province',
-		'postal',
-		'latitude',
-		'longitude',
-		'primary_image_id',
-		'short_description',
-		'description',
-		'notes',
-		);
-	foreach($changelog_fields as $field) {
-		if( isset($args[$field]) && $args[$field] != '' ) {
-			$rc = ciniki_core_dbAddModuleHistory($ciniki, 'ciniki.exhibitions', 
-				'ciniki_exhibition_history', $args['business_id'], 
-				1, 'ciniki_exhibition_contacts', $contact_id, $field, $args[$field]);
-		}
-	}
-
-	//
-	// Add image reference
-	//
-	if( $args['primary_image_id'] != '' && $args['primary_image_id'] != '0' ) {
-		ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refAdd');
-		$rc = ciniki_images_refAdd($ciniki, $args['business_id'], array(
-			'image_id'=>$args['primary_image_id'], 
-			'object'=>'ciniki.exhibitions.contact', 
-			'object_id'=>$contact_id,
-			'object_field'=>'primary_image_id'));
-		if( $rc['stat'] != 'ok' ) {
-			ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-			return $rc;
-		}
-	}
-
-	//
-	// Commit the database changes
-	//
-    $rc = ciniki_core_dbTransactionCommit($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) {
-		return $rc;
-	}
-
-	//
-	// Update the last_change date in the business modules
-	// Ignore the result, as we don't want to stop user updates if this fails.
-	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'businesses', 'private', 'updateModuleChangeDate');
-	ciniki_businesses_updateModuleChangeDate($ciniki, $args['business_id'], 'ciniki', 'exhibitions');
-
-	$ciniki['syncqueue'][] = array('push'=>'ciniki.exhibitions.contact', 
-		'args'=>array('id'=>$contact_id));
-
-	return array('stat'=>'ok', 'id'=>$contact_id);
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectAdd');
+	return ciniki_core_objectAdd($ciniki, $args['business_id'], 'ciniki.exhibitions.contact', $args, 0x07);
 }
 ?>

@@ -46,101 +46,10 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
         return $rc;
     }
 
-	//  
-	// Turn off autocommit
-	//  
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbTransactionStart');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbTransactionRollback');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbTransactionCommit');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbQuote');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbInsert');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbAddModuleHistory');
-	$rc = ciniki_core_dbTransactionStart($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) { 
-		return $rc;
-	}   
-
 	//
-	// Get a new UUID
+	// Add the participant
 	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbUUID');
-	$rc = ciniki_core_dbUUID($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) {
-		return $rc;
-	}
-	$args['uuid'] = $rc['uuid'];
-
-	//
-	// Add the exhibition to the database
-	//
-	$strsql = "INSERT INTO ciniki_exhibition_participants (uuid, business_id, "
-		. "exhibition_id, contact_id, "
-		. "category, type, status, webflags, level, title, location, "
-		. "date_added, last_updated) VALUES ("
-		. "'" . ciniki_core_dbQuote($ciniki, $args['uuid']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['contact_id']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['category']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['type']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['status']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['webflags']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['level']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['title']) . "', "
-		. "'" . ciniki_core_dbQuote($ciniki, $args['location']) . "', "
-		. "UTC_TIMESTAMP(), UTC_TIMESTAMP())";
-	$rc = ciniki_core_dbInsert($ciniki, $strsql, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) { 
-		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return $rc;
-	}
-	if( !isset($rc['insert_id']) || $rc['insert_id'] < 1 ) {
-		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'173', 'msg'=>'Unable to add participant'));
-	}
-	$participant_id = $rc['insert_id'];
-
-	//
-	// Add all the fields to the change log
-	//
-	$changelog_fields = array(
-		'uuid',
-		'exhibition_id',
-		'contact_id',
-		'category',
-		'type',
-		'status',
-		'webflags',
-		'level',
-		'title',
-		'location',
-		);
-	foreach($changelog_fields as $field) {
-		if( isset($args[$field]) && $args[$field] != '' ) {
-			$rc = ciniki_core_dbAddModuleHistory($ciniki, 'ciniki.exhibitions', 
-				'ciniki_exhibition_history', $args['business_id'], 
-				1, 'ciniki_exhibition_participants', $participant_id, $field, $args[$field]);
-		}
-	}
-
-	//
-	// Commit the database changes
-	//
-    $rc = ciniki_core_dbTransactionCommit($ciniki, 'ciniki.exhibitions');
-	if( $rc['stat'] != 'ok' ) {
-		return $rc;
-	}
-
-	//
-	// Update the last_change date in the business modules
-	// Ignore the result, as we don't want to stop user updates if this fails.
-	//
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'businesses', 'private', 'updateModuleChangeDate');
-	ciniki_businesses_updateModuleChangeDate($ciniki, $args['business_id'], 'ciniki', 'exhibitions');
-
-	$ciniki['syncqueue'][] = array('push'=>'ciniki.exhibitions.participant', 
-		'args'=>array('id'=>$participant_id));
-
-	return array('stat'=>'ok', 'id'=>$participant_id);
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectAdd');
+	return ciniki_core_objectAdd($ciniki, $args['business_id'], 'ciniki.exhibitions.participant', $args, 0x07);
 }
 ?>

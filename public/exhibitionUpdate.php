@@ -32,6 +32,7 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
 		// Details
 		'use-exhibitors'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Exhibitors'),
 		'use-sponsors'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Sponsors'),
+		'use-tour'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Tour'),
 		'exhibitor-label-singular'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Exhibitor Label'),
 		'exhibitor-label-plural'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Exhibitor Label Plural'),
 		// Sponsor levels
@@ -93,6 +94,11 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
 	}   
 
 	//
+	// NOTE: This does NOT use the generic objectUpdate function, it's more complicated with the details table
+	//
+
+
+	//
 	// Add all the fields to the change log
 	//
 	$strsql = "UPDATE ciniki_exhibitions SET last_updated = UTC_TIMESTAMP()";
@@ -133,6 +139,7 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
 	$detail_keys = array(
 		'use-exhibitors',
 		'use-sponsors',
+		'use-tour',
 		'exhibitor-label-singular',
 		'exhibitor-label-plural',
 		'sponsor-level-10-name',
