@@ -47,7 +47,7 @@ function ciniki_exhibitions_participantDelete(&$ciniki) {
 	}
 	if( !isset($rc['item']) ) {
 		ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'486', 'msg'=>'Participant does not exist'));
+		return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'1293', 'msg'=>'Participant does not exist'));
 	}
 	$uuid = $rc['item']['uuid'];
 
