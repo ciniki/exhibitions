@@ -37,28 +37,27 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbUpdate');
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbDelete');
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbFixTableHistory');
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'refAddMissing');
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectRefFix');
 
 	if( $args['fix'] == 'yes' ) {
 		//
-		// Add missing image refs
+		// Load objects file
 		//
-		$rc = ciniki_images_refAddMissing($ciniki, 'ciniki.exhibitions', $args['business_id'],
-			array('object'=>'ciniki.exhibitions.contact', 
-				'object_table'=>'ciniki_exhibition_contacts',
-				'object_id_field'=>'id',
-				'object_field'=>'primary_image_id'));
+		ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'objects');
+		$rc = ciniki_exhibitions_objects($ciniki);
 		if( $rc['stat'] != 'ok' ) {
 			return $rc;
 		}
+		$objects = $rc['objects'];
 
-		$rc = ciniki_images_refAddMissing($ciniki, 'ciniki.exhibitions', $args['business_id'],
-			array('object'=>'ciniki.exhibitions.contact_image', 
-				'object_table'=>'ciniki_exhibition_contact_images',
-				'object_id_field'=>'id',
-				'object_field'=>'image_id'));
-		if( $rc['stat'] != 'ok' ) {
-			return $rc;
+		//
+		// Check any references for the objects
+		//
+		foreach($objects as $o => $obj) {
+			$rc = ciniki_core_objectRefFix($ciniki, $args['business_id'], 'ciniki.exhibitions.'.$o, 0x04);
+			if( $rc['stat'] != 'ok' ) {
+				return $rc;
+			}
 		}
 
 		//
