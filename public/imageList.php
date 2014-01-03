@@ -112,7 +112,7 @@ function ciniki_exhibitions_imageList($ciniki) {
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'loadCacheThumbnail');
 	foreach($images as $inum => $image) {
 		if( isset($image['image']['image_id']) && $image['image']['image_id'] > 0 ) {
-			$rc = ciniki_images_loadCacheThumbnail($ciniki, $image['image']['image_id'], 75);
+			$rc = ciniki_images_loadCacheThumbnail($ciniki, $args['business_id'], $image['image']['image_id'], 75);
 			if( $rc['stat'] != 'ok' ) {
 				return $rc;
 			}
