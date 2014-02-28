@@ -12,8 +12,8 @@
 function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id, $exhibition_id, $type) {
 
 	$strsql = "SELECT ciniki_exhibition_participants.id, "
-		. "ciniki_exhibition_participants.category, "
-		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS name, "
+		. "ciniki_exhibition_participants.category AS name, "
+		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS title, "
 		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.short_description, "
 		. "ciniki_exhibition_contacts.address1, "
@@ -24,7 +24,8 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 		. "ciniki_exhibition_contacts.latitude, "
 		. "ciniki_exhibition_contacts.longitude, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
-		. "ciniki_exhibition_contacts.url "
+		. "ciniki_exhibition_contacts.url, "
+		. "'yes' AS is_details "
 		. "FROM ciniki_exhibition_contacts "
 		. "LEFT JOIN ciniki_exhibition_participants ON ("
 			. "ciniki_exhibition_contacts.id = ciniki_exhibition_participants.contact_id "
@@ -43,16 +44,16 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 	} else {
 		return array('stat'=>'ok', 'participants'=>array());
 	}
-	$strsql .= "ORDER BY category, name ";
+	$strsql .= "ORDER BY category, title ";
 
-	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');
-	$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
-		array('container'=>'categories', 'fname'=>'category', 'name'=>'category',
-			'fields'=>array('name'=>'category')),
-		array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
-			'fields'=>array('id', 'name', 'image_id'=>'primary_image_id', 
+	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryIDTree');
+	$rc = ciniki_core_dbHashQueryIDTree($ciniki, $strsql, 'ciniki.exhibitions', array(
+		array('container'=>'categories', 'fname'=>'name',
+			'fields'=>array('name')),
+		array('container'=>'list', 'fname'=>'id',
+			'fields'=>array('id', 'title', 'image_id'=>'primary_image_id', 
 				'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
-				'permalink', 'description'=>'short_description', 'url')),
+				'permalink', 'description'=>'short_description', 'url', 'is_details')),
 		));
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
