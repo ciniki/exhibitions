@@ -910,7 +910,7 @@ function ciniki_exhibitions_participants() {
 			var script = document.createElement("script");
 			script.id = 'googlemaps_js';
 			script.type = "text/javascript";
-			script.src = "http://maps.googleapis.com/maps/api/js?key=" + M.curBusiness.settings['googlemapsapikey'] + "&sensor=false&callback=M.ciniki_exhibitions_participants.lookupGoogleLatLong";
+			script.src = "https://maps.googleapis.com/maps/api/js?key=" + M.curBusiness.settings['googlemapsapikey'] + "&sensor=false&callback=M.ciniki_exhibitions_participants.lookupGoogleLatLong";
 			document.body.appendChild(script);
 		} else {
 			this.lookupGoogleLatLong();
