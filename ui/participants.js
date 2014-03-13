@@ -190,7 +190,7 @@ function ciniki_exhibitions_participants() {
 		};
 		this.participant.sectionData = function(s) {
 			if( s == 'images' ) { return this.data.images; }
-			if( s == 'short_description' || s == 'description' || s == 'notes' ) { return this.data[s]; }
+			if( s == 'short_description' || s == 'description' || s == 'notes' ) { return this.data[s].replace(/\n/g, '<br/>'); }
 			return this.sections[s].list;
 			};
 		this.participant.listLabel = function(s, i, d) {
@@ -244,7 +244,7 @@ function ciniki_exhibitions_participants() {
 			return this.data[i];
 		};
 		this.participant.fieldValue = function(s, i, d) {
-			if( i == 'description' || i == 'notes' ) { 
+			if( i == 'short_description' || i == 'description' || i == 'notes' ) { 
 				return this.data[i].replace(/\n/g, '<br/>');
 			}
 			return this.data[i];
