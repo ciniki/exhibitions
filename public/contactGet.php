@@ -66,6 +66,11 @@ function ciniki_exhibitions_contactGet($ciniki) {
 		. "ciniki_exhibition_contacts.postal, "
 		. "ciniki_exhibition_contacts.latitude, "
 		. "ciniki_exhibition_contacts.longitude, "
+		. "ciniki_exhibition_contacts.mailing_address1, "
+		. "ciniki_exhibition_contacts.mailing_address2, "
+		. "ciniki_exhibition_contacts.mailing_city, "
+		. "ciniki_exhibition_contacts.mailing_province, "
+		. "ciniki_exhibition_contacts.mailing_postal, "
 		. "ciniki_exhibition_contacts.primary_image_id, "
 		. "ciniki_exhibition_contacts.short_description, "
 		. "ciniki_exhibition_contacts.description, "
@@ -121,6 +126,8 @@ function ciniki_exhibitions_contactGet($ciniki) {
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
 					'phone_work', 'phone_cell', 'phone_fax', 'url', 
 					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude',
+					'mailing_address1', 'mailing_address2', 'mailing_city', 'mailing_province', 
+					'mailing_postal', 
 					'primary_image_id', 'short_description', 'description', 'notes')),
 			array('container'=>'images', 'fname'=>'img_id', 'name'=>'image',
 				'fields'=>array('id'=>'img_id', 'name'=>'image_name', 'webflags'=>'image_webflags',

@@ -21,6 +21,19 @@
 # phone_cell:		The cell phone number of the contact.
 # phone_fax:		The fax number of the contact.
 # url:				The contacts website url.
+#
+# address1:			The address for the studio/display location.
+# address2:
+# city:
+# province:
+# postal:
+#
+# mailing_address1:	The mailing address of the contact
+# mailing_address2:
+# mailing_city:
+# mailing_province:
+# mailing_postal:
+#
 # primary_image_id:	The ID of the image in ciniki.images to use as the contact's image.
 # description:		The short description for use in lists.
 # description:		The description/bio of the contact.
@@ -51,6 +64,11 @@ create table ciniki_exhibition_contacts (
 	postal varchar(250) not null,
 	latitude decimal(18,12) not null,
 	longitude decimal(18,12) not null,
+	mailing_address1 varchar(250) not null,
+	mailing_address2 varchar(250) not null,
+	mailing_city varchar(250) not null,
+	mailing_province varchar(250) not null,
+	mailing_postal varchar(250) not null,
 	primary_image_id int not null,
 	short_description varchar(1000) not null,
 	description varchar(10000) not null,
@@ -62,4 +80,4 @@ create table ciniki_exhibition_contacts (
 	index (email, passcode),
 	index (business_id, uuid, last_updated),
 	unique index permalink (business_id, permalink)
-) ENGINE='InnoDB', COMMENT='v1.03';
+) ENGINE='InnoDB', COMMENT='v1.04';

@@ -151,7 +151,8 @@ function ciniki_exhibitions_participants() {
 				'url':{'label':'Website', 'visible':'no'},
 				}},
 			'address':{'label':'', 'visible':'no', 'list':{
-				'address1':{'label':'Address'},
+				'address1':{'label':'Display Address'},
+				'mailing_address1':{'label':'Mailing Address'},
 				'latlong':{'label':'Lat/Long'},
 				}},
 			'organizer':{'label':'Organization', 'visible':'no', 'list':{
@@ -212,6 +213,22 @@ function ciniki_exhibitions_participants() {
 				}
 				if( this.data.postal != null && this.data.postal != '' ) {
 					address += '  ' + this.data.postal;
+				}
+				return address;
+			}
+			if( s == 'address' && i == 'mailing_address1' ) {
+				var address = this.data.mailing_address1;
+				if( this.data.mailing_address2 != '' ) {
+					address += ', ' + this.data.mailing_address2;
+				}
+				if( this.data.mailing_city != null && this.data.mailing_city != '' ) {
+					address += ', ' + this.data.mailing_city;
+				}
+				if( this.data.mailing_province != null && this.data.mailing_province != '' ) {
+					address += ', ' + this.data.mailing_province;
+				}
+				if( this.data.mailing_postal != null && this.data.mailing_postal != '' ) {
+					address += '  ' + this.data.mailing_postal;
 				}
 				return address;
 			}
@@ -318,7 +335,7 @@ function ciniki_exhibitions_participants() {
 				'phone_fax':{'label':'Fax Phone', 'type':'text'},
 				'url':{'label':'Website', 'type':'text'},
 				}},
-			'address':{'label':'Address', 'fields':{
+			'address':{'label':'Gallery Address', 'fields':{
 				'address1':{'label':'Address', 'type':'text'},
 				'address2':{'label':'', 'type':'text'},
 				'city':{'label':'City', 'type':'text'},
@@ -329,6 +346,13 @@ function ciniki_exhibitions_participants() {
 				}},
 			'_address_buttons':{'label':'', 'buttons':{
 				'save':{'label':'Lookup Lat/Long', 'fn':'M.ciniki_exhibitions_participants.lookupLatLong();'},
+				}},
+			'mailing_address':{'label':'Mailing Address', 'fields':{
+				'mailing_address1':{'label':'Address', 'type':'text'},
+				'mailing_address2':{'label':'', 'type':'text'},
+				'mailing_city':{'label':'City', 'type':'text'},
+				'mailing_province':{'label':'Province', 'type':'text'},
+				'mailing_postal':{'label':'Postal', 'type':'text'},
 				}},
 			'_short_description':{'label':'Brief Description', 'fields':{
 				'short_description':{'label':'', 'hidelabel':'yes', 'size':'small', 'type':'textarea'},
@@ -421,9 +445,7 @@ function ciniki_exhibitions_participants() {
 	
 	this.start = function(cb, appPrefix, aG) {
 		args = {};
-		if( aG != null ) {
-			args = eval(aG);
-		}
+		if( aG != null ) { args = eval(aG); }
 
 		//
 		// Create container
@@ -618,6 +640,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections._description.visible = 'yes';
 			this.edit.sections.address.visible = 'no';
 			this.edit.sections._address_buttons.visible = 'no';
+			this.edit.sections.mailing_address.visible = 'yes';
 			this.edit.sections.organization.fields.category.active = 'no';
 			this.edit.sections.organization.fields.status.active = 'no';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
@@ -631,6 +654,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.participant_type = this.edit.data.type | 0x2;
 			this.edit.sections.address.visible = 'no';
 			this.edit.sections._address_buttons.visible = 'no';
+			this.edit.sections.mailing_address.visible = 'yes';
 			this.edit.sections.organization.visible = 'no';
 			this.edit.sections._description.visible = 'no';
 			this.edit.sections._buttons.buttons.save.label = 'Save Volunteer';
@@ -642,6 +666,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections._description.visible = 'yes';
 			this.edit.sections.address.visible = 'no';
 			this.edit.sections._address_buttons.visible = 'no';
+			this.edit.sections.mailing_address.visible = 'yes';
 			this.edit.sections.organization.fields.category.active = 'yes';
 			this.edit.sections.organization.fields.status.active = 'yes';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
@@ -657,6 +682,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections._description.visible = 'no';
 			this.edit.sections.address.visible = 'no';
 			this.edit.sections._address_buttons.visible = 'no';
+			this.edit.sections.mailing_address.visible = 'yes';
 			this.edit.sections.organization.fields.category.active = 'yes';
 			this.edit.sections.organization.fields.status.active = 'no';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
@@ -677,6 +703,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections._description.visible = 'yes';
 			this.edit.sections.address.visible = 'yes';
 			this.edit.sections._address_buttons.visible = 'yes';
+			this.edit.sections.mailing_address.visible = 'yes';
 			this.edit.sections.organization.fields.category.active = 'yes';
 			this.edit.sections.organization.fields.status.active = 'yes';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
@@ -811,6 +838,9 @@ function ciniki_exhibitions_participants() {
 			if( this.edit.sections.address.visible == 'yes' ) {
 				c += this.edit.serializeFormSection('no', 'address');
 			}
+			if( this.edit.sections.mailing_address.visible == 'yes' ) {
+				c += this.edit.serializeFormSection('no', 'mailing_address');
+			}
 			if( c != '' ) {
 				var rsp = M.api.postJSONCb('ciniki.exhibitions.contactUpdate', 
 					{'business_id':M.curBusinessID, 'contact_id':this.edit.contact_id}, c, function(rsp) {
@@ -835,6 +865,9 @@ function ciniki_exhibitions_participants() {
 			}
 			if( this.edit.sections.address.visible == 'yes' ) {
 				c += this.edit.serializeFormSection('yes', 'address');
+			}
+			if( this.edit.sections.mailing_address.visible == 'yes' ) {
+				c += this.edit.serializeFormSection('yes', 'mailing_address');
 			}
 			var rsp = M.api.postJSONCb('ciniki.exhibitions.contactAdd', 
 				{'business_id':M.curBusinessID}, c, function(rsp) {

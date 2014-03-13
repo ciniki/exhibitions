@@ -1,0 +1,9 @@
+#
+# Add the unique index to the contacts for permalink
+#
+ALTER TABLE ciniki_exhibition_contacts ADD COLUMN mailing_address1 varchar(250) not null AFTER longitude;
+ALTER TABLE ciniki_exhibition_contacts ADD COLUMN mailing_address2 varchar(250) not null AFTER mailing_address1;
+ALTER TABLE ciniki_exhibition_contacts ADD COLUMN mailing_city varchar(250) not null AFTER mailing_address2;
+ALTER TABLE ciniki_exhibition_contacts ADD COLUMN mailing_province varchar(250) not null AFTER mailing_city;
+ALTER TABLE ciniki_exhibition_contacts ADD COLUMN mailing_postal varchar(250) not null AFTER mailing_province;
+ALTER TABLE ciniki_exhibition_contacts COMMENT='v1.04';
