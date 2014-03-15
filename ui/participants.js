@@ -151,6 +151,7 @@ function ciniki_exhibitions_participants() {
 				'url':{'label':'Website', 'visible':'no'},
 				}},
 			'address':{'label':'', 'visible':'no', 'list':{
+				'studio_name':{'label':'Studio Name'},
 				'address1':{'label':'Display Address'},
 				'mailing_address1':{'label':'Mailing Address'},
 				'latlong':{'label':'Lat/Long'},
@@ -336,6 +337,7 @@ function ciniki_exhibitions_participants() {
 				'url':{'label':'Website', 'type':'text'},
 				}},
 			'address':{'label':'Gallery Address', 'fields':{
+				'studio_name':{'label':'Studio Name', 'type':'text'},
 				'address1':{'label':'Address', 'type':'text'},
 				'address2':{'label':'', 'type':'text'},
 				'city':{'label':'City', 'type':'text'},

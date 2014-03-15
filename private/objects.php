@@ -55,6 +55,7 @@ function ciniki_exhibitions_objects(&$ciniki) {
 			'phone_cell'=>array(),
 			'phone_fax'=>array(),
 			'url'=>array(),
+			'studio_name'=>array(),
 			'address1'=>array(),
 			'address2'=>array(),
 			'city'=>array(),

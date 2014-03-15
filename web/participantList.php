@@ -16,6 +16,7 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS title, "
 		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.short_description, "
+		. "ciniki_exhibition_contacts.studio_name, "
 		. "ciniki_exhibition_contacts.address1, "
 		. "ciniki_exhibition_contacts.address2, "
 		. "ciniki_exhibition_contacts.city, "
@@ -51,7 +52,7 @@ function ciniki_exhibitions_web_participantList($ciniki, $settings, $business_id
 		array('container'=>'categories', 'fname'=>'name',
 			'fields'=>array('name')),
 		array('container'=>'list', 'fname'=>'id',
-			'fields'=>array('id', 'title', 'image_id'=>'primary_image_id', 
+			'fields'=>array('id', 'title', 'image_id'=>'primary_image_id', 'studio_name',
 				'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
 				'permalink', 'description'=>'short_description', 'url', 'is_details')),
 		));

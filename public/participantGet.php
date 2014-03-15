@@ -69,6 +69,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 		. "ciniki_exhibition_contacts.phone_cell, "
 		. "ciniki_exhibition_contacts.phone_fax, "
 		. "ciniki_exhibition_contacts.url, "
+		. "ciniki_exhibition_contacts.studio_name, "
 		. "ciniki_exhibition_contacts.address1, "
 		. "ciniki_exhibition_contacts.address2, "
 		. "ciniki_exhibition_contacts.city, "
@@ -120,7 +121,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 				'fields'=>array('id', 'exhibition_id', 'category', 'type', 'status',
 					'status_text', 'webflags', 'level', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
-					'phone_work', 'phone_cell', 'phone_fax', 'url', 
+					'phone_work', 'phone_cell', 'phone_fax', 'url', 'studio_name', 
 					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
 					'mailing_address1', 'mailing_address2', 'mailing_city', 'mailing_province', 'mailing_postal', 
 					'primary_image_id', 'short_description', 'description', 'notes'),
@@ -155,7 +156,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
 				'fields'=>array('id', 'exhibition_id', 'category', 'type', 'status',
 					'status_text', 'webflags', 'level', 'webvisible', 'title', 'location', 
 					'contact_id', 'first', 'last', 'company', 'email', 'phone_home',
-					'phone_work', 'phone_cell', 'phone_fax', 'url', 
+					'phone_work', 'phone_cell', 'phone_fax', 'url', 'studio_name', 
 					'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
 					'mailing_address1', 'mailing_address2', 'mailing_city', 'mailing_province', 'mailing_postal',
 					'primary_image_id', 'short_description', 'description', 'notes'),

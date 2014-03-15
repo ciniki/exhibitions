@@ -1,0 +1,5 @@
+#
+# Add the unique index to the contacts for permalink
+#
+ALTER TABLE ciniki_exhibition_contacts ADD COLUMN studio_name varchar(250) not null AFTER url;
+ALTER TABLE ciniki_exhibition_contacts COMMENT='v1.05';

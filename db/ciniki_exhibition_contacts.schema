@@ -22,6 +22,7 @@
 # phone_fax:		The fax number of the contact.
 # url:				The contacts website url.
 #
+# studio_name:		The name for the studio/display location.
 # address1:			The address for the studio/display location.
 # address2:
 # city:
@@ -57,6 +58,7 @@ create table ciniki_exhibition_contacts (
 	phone_cell varchar(50) not null,
 	phone_fax varchar(50) not null,
 	url varchar(255) not null,
+	studio_name varchar(250) not null,
 	address1 varchar(250) not null,
 	address2 varchar(250) not null,
 	city varchar(250) not null,
@@ -80,4 +82,4 @@ create table ciniki_exhibition_contacts (
 	index (email, passcode),
 	index (business_id, uuid, last_updated),
 	unique index permalink (business_id, permalink)
-) ENGINE='InnoDB', COMMENT='v1.04';
+) ENGINE='InnoDB', COMMENT='v1.05';
