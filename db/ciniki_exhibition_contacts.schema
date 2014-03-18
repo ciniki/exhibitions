@@ -72,8 +72,8 @@ create table ciniki_exhibition_contacts (
 	mailing_province varchar(250) not null,
 	mailing_postal varchar(250) not null,
 	primary_image_id int not null,
-	short_description varchar(1000) not null,
-	description varchar(10000) not null,
+	short_description varchar(20000) not null,
+	description varchar(20000) not null,
 	notes varchar(6000) not null,
 	date_added datetime not null,
 	last_updated datetime not null,
@@ -82,4 +82,4 @@ create table ciniki_exhibition_contacts (
 	index (email, passcode),
 	index (business_id, uuid, last_updated),
 	unique index permalink (business_id, permalink)
-) ENGINE='InnoDB', COMMENT='v1.05';
+) ENGINE='InnoDB', COMMENT='v1.06';

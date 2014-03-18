@@ -1,0 +1,6 @@
+#
+# Add the unique index to the contacts for permalink
+#
+ALTER TABLE ciniki_exhibition_contacts MODIFY COLUMN short_description varchar(20000) not null;
+ALTER TABLE ciniki_exhibition_contacts MODIFY COLUMN description varchar(20000) not null;
+ALTER TABLE ciniki_exhibition_contacts COMMENT='v1.06';

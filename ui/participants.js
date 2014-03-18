@@ -357,7 +357,7 @@ function ciniki_exhibitions_participants() {
 				'mailing_postal':{'label':'Postal', 'type':'text'},
 				}},
 			'_short_description':{'label':'Brief Description', 'fields':{
-				'short_description':{'label':'', 'hidelabel':'yes', 'size':'small', 'type':'textarea'},
+				'short_description':{'label':'', 'hidelabel':'yes', 'size':'medium', 'type':'textarea'},
 				}},
 			'_description':{'label':'Bio', 'fields':{
 				'description':{'label':'', 'hidelabel':'yes', 'type':'textarea'},
