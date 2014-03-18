@@ -105,8 +105,8 @@ function ciniki_exhibitions_main() {
 			'options':{'label':'Options', 'fields':{
 //				'use-gallery':{'label':'Gallery', 'type':'toggle', 'toggles':{'no':'No', 'yes':'Yes'}},
 				'use-exhibitors':{'label':'Exhibitors', 'type':'toggle', 'toggles':{'no':'No', 'yes':'Yes'}},
-				'use-sponsors':{'label':'Sponsors', 'type':'toggle', 'toggles':{'no':'No', 'yes':'Yes'}},
 				'use-tour':{'label':'Tour', 'type':'toggle', 'toggles':{'no':'No', 'yes':'Yes'}},
+				'use-sponsors':{'label':'Sponsors', 'type':'toggle', 'toggles':{'no':'No', 'yes':'Yes'}},
 				'exhibitor-label-singular':{'label':'Exhibitor Label', 'type':'text'},
 				'exhibitor-label-plural':{'label':'Exhibitor Label Plural', 'type':'text'},
 				}},
@@ -184,13 +184,13 @@ function ciniki_exhibitions_main() {
 					p.data.menu.exhibitors = {'label':'Exhibitors',
 						'fn':'M.startApp(\'ciniki.exhibitions.participants\',null,\'M.ciniki_exhibitions_main.showExhibition();\',\'mc\',{\'exhibition_id\':M.ciniki_exhibitions_main.exhibition.exhibition_id,\'exhibitors\':\'yes\'});'};
 				}
+				if( rsp.exhibition['use-tour'] != null && rsp.exhibition['use-tour'] == 'yes' ) {
+					p.data.menu.tour = {'label':'Tour Exhibitors',
+						'fn':'M.startApp(\'ciniki.exhibitions.participants\',null,\'M.ciniki_exhibitions_main.showExhibition();\',\'mc\',{\'exhibition_id\':M.ciniki_exhibitions_main.exhibition.exhibition_id,\'tour\':\'yes\'});'};
+				}
 				if( rsp.exhibition['use-sponsors'] != null && rsp.exhibition['use-sponsors'] == 'yes' ) {
 					p.data.menu.sponsor = {'label':'Sponsors',
 						'fn':'M.startApp(\'ciniki.exhibitions.participants\',null,\'M.ciniki_exhibitions_main.showExhibition();\',\'mc\',{\'exhibition_id\':M.ciniki_exhibitions_main.exhibition.exhibition_id,\'sponsors\':\'yes\'});'};
-				}
-				if( rsp.exhibition['use-tour'] != null && rsp.exhibition['use-tour'] == 'yes' ) {
-					p.data.menu.tour = {'label':'Tour',
-						'fn':'M.startApp(\'ciniki.exhibitions.participants\',null,\'M.ciniki_exhibitions_main.showExhibition();\',\'mc\',{\'exhibition_id\':M.ciniki_exhibitions_main.exhibition.exhibition_id,\'tour\':\'yes\'});'};
 				}
 		//		p.data.menu['contacts'] = {'label':'Contacts',
 		//			'fn':'M.startApp(\'ciniki.exhibitions.participants\',null,\'M.ciniki_exhibitions_main.showExhibition();\',\'mc\',{\'exhibition_id\':M.ciniki_exhibitions_main.exhibition.exhibition_id,\'contacts\':\'yes\'});'};
