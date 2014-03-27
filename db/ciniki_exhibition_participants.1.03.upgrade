@@ -1,0 +1,6 @@
+#
+# Add the level column for sponsorship level, may be used for other types in the future.
+#
+ALTER TABLE ciniki_exhibition_participants ADD COLUMN sequence tinyint not null AFTER level;
+UPDATE ciniki_exhibition_participants SET sequence = 1;
+ALTER TABLE ciniki_exhibition_participants COMMENT='v1.03';

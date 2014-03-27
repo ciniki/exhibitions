@@ -63,6 +63,7 @@ create table ciniki_exhibition_participants (
 	status tinyint unsigned not null,
 	webflags tinyint unsigned not null,
 	level tinyint unsigned not null,
+	sequence tinyint unsigned not null,
 	title varchar(150) not null,
 	location varchar(150) not null,
 	date_added datetime not null,
@@ -70,4 +71,4 @@ create table ciniki_exhibition_participants (
 	primary key (id),
 	index (exhibition_id, contact_id),
 	index (business_id, uuid, last_updated)
-) ENGINE='InnoDB', COMMENT='v1.02';
+) ENGINE='InnoDB', COMMENT='v1.03';

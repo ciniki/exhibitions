@@ -100,6 +100,7 @@ function ciniki_exhibitions_objects(&$ciniki) {
 			'status'=>array(),
 			'webflags'=>array(),
 			'level'=>array(),
+			'sequence'=>array(),
 			'title'=>array(),
 			'location'=>array(),
 			),

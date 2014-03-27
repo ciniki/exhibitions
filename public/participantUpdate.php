@@ -24,11 +24,12 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
         'exhibition_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition'), 
 		'participant_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Participant'),
         'contact_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Contact'), 
+		'level'=>array('required'=>'no', 'blank'=>'yes', 'validlist'=>array('10','20','30','40','50'), 'name'=>'Level'),
+		'sequence'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Sequence'),
 		'category'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Category'),
 		'type'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'no', 'name'=>'Type'),
 		'status'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'status'),
 		'webflags'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Web Flags'),
-		'level'=>array('required'=>'no', 'blank'=>'yes', 'validlist'=>array('10','20','30','40','50'), 'name'=>'Level'),
 		'title'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Title'),
 		'location'=>array('required'=>'no', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Location'),
         )); 
