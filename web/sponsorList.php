@@ -14,9 +14,6 @@ function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
 	$exhibition_id = $settings['page-exhibitions-exhibition'];
 	$type = 'sponsor';
 
-	
-
-
 	$strsql = "SELECT ciniki_exhibition_participants.id, "
 		. "ciniki_exhibition_participants.category, "
 		. "IF(ciniki_exhibition_contacts.company='', CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last), ciniki_exhibition_contacts.company) AS name, "
@@ -36,7 +33,7 @@ function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
 		. "AND (ciniki_exhibition_participants.webflags&0x01) = 0 "
 		// Only get sponsors
 		. "AND ((type&0x20) = 0x20) "
-		. "ORDER BY ciniki_exhibition_participants.level DESC, ciniki_exhibition_participants.sequence, category, name ";
+		. "ORDER BY ciniki_exhibition_participants.level DESC, ciniki_exhibition_participants.sequence DESC, category, name ";
 
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');
 	$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
