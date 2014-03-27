@@ -37,6 +37,10 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
     }   
     $args = $rc['args'];
 
+	if( $args['sequence'] == '' ) { 
+		$args['sequence'] = 1; 
+	}
+
     //  
     // Make sure this module is activated, and
     // check permission to run this function for this business
