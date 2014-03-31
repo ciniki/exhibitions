@@ -323,7 +323,7 @@ function ciniki_exhibitions_participants() {
 				}},
 			'organization':{'label':'Organization', 'visible':'no', 'fields':{
 				'level':{'label':'Level', 'active':'no', 'type':'multitoggle', 'options':{}},
-				'sequence':{'label':'Order', 'type':'text', 'hint':'255-1', 'size':'small'},
+				'sequence':{'label':'Order', 'active':'no', 'type':'text', 'hint':'255-1', 'size':'small'},
 				'category':{'label':'Category', 'active':'no', 'type':'text', 'livesearch':'yes', 'livesearchempty':'yes'},
 				'status':{'label':'Status', 'active':'no', 'type':'toggle', 'toggles':this.statusToggles},
 				'webflags':{'label':'Website', 'type':'flags', 'toggle':'no', 'join':'yes', 'flags':this.webFlags},
@@ -671,6 +671,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections.address.visible = 'no';
 			this.edit.sections._address_buttons.visible = 'no';
 			this.edit.sections.mailing_address.visible = 'yes';
+			this.edit.sections.organization.fields.sequence.active = 'no';
 			this.edit.sections.organization.fields.category.active = 'yes';
 			this.edit.sections.organization.fields.status.active = 'yes';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
@@ -687,6 +688,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections.address.visible = 'no';
 			this.edit.sections._address_buttons.visible = 'no';
 			this.edit.sections.mailing_address.visible = 'yes';
+			this.edit.sections.organization.fields.sequence.active = 'yes';
 			this.edit.sections.organization.fields.category.active = 'yes';
 			this.edit.sections.organization.fields.status.active = 'no';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
@@ -708,6 +710,7 @@ function ciniki_exhibitions_participants() {
 			this.edit.sections.address.visible = 'yes';
 			this.edit.sections._address_buttons.visible = 'yes';
 			this.edit.sections.mailing_address.visible = 'yes';
+			this.edit.sections.organization.fields.sequence.active = 'no';
 			this.edit.sections.organization.fields.category.active = 'yes';
 			this.edit.sections.organization.fields.status.active = 'yes';
 			this.edit.sections.organization.fields.webflags.active = 'yes';
