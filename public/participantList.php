@@ -23,6 +23,7 @@ function ciniki_exhibitions_participantList($ciniki) {
 		'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
 		'exhibition_id'=>array('required'=>'yes', 'blankk'=>'yes', 'name'=>'Exhibition'),
 		'type'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Participant Type'),
+		'details'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Details'),
 		));
 	if( $rc['stat'] != 'ok' ) {
 		return $rc;
@@ -50,6 +51,7 @@ function ciniki_exhibitions_participantList($ciniki) {
 		. "ciniki_exhibition_participants.title, "
 		. "ciniki_exhibition_participants.status, "
 		. "ciniki_exhibition_participants.status AS status_text, "
+		. "IF((ciniki_exhibition_participants.webflags&0x01)=1,'Hidden','Visible') as webvisible, "
 		. "ciniki_exhibition_contacts.first, "
 		. "ciniki_exhibition_contacts.last, "
 		. "ciniki_exhibition_contacts.company, "
@@ -57,10 +59,38 @@ function ciniki_exhibitions_participantList($ciniki) {
 		. "ciniki_exhibition_contacts.phone_home, "
 		. "ciniki_exhibition_contacts.phone_work, "
 		. "ciniki_exhibition_contacts.phone_cell, "
-		. "ciniki_exhibition_contacts.phone_fax "
-		. "FROM ciniki_exhibition_participants "
-		. "LEFT JOIN ciniki_exhibition_contacts ON (ciniki_exhibition_participants.contact_id = ciniki_exhibition_contacts.id) "
-		. "WHERE ciniki_exhibition_participants.exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
+		. "ciniki_exhibition_contacts.phone_fax, "
+		. "ciniki_exhibition_contacts.address1, "
+		. "ciniki_exhibition_contacts.address2, "
+		. "ciniki_exhibition_contacts.city, "
+		. "ciniki_exhibition_contacts.province, "
+		. "ciniki_exhibition_contacts.postal "
+		. "";
+	if( isset($args['details']) && $args['details'] == 'yes' ) {
+		$strsql .= ", "
+			. "ciniki_exhibition_contacts.studio_name, "
+			. "ciniki_exhibition_contacts.latitude, "
+			. "ciniki_exhibition_contacts.longitude, "
+			. "ciniki_exhibition_contacts.primary_image_id, "
+			. "ciniki_exhibition_contacts.short_description, "
+			. "ciniki_exhibition_contacts.description, "
+			. "ciniki_exhibition_contact_images.image_id AS images "
+			. "";
+	}
+	$strsql .= "FROM ciniki_exhibition_participants "
+		. "LEFT JOIN ciniki_exhibition_contacts ON ("
+			. "ciniki_exhibition_participants.contact_id = ciniki_exhibition_contacts.id "
+			. "AND ciniki_exhibition_contacts.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+			. ") ";
+	if( isset($args['details']) && $args['details'] == 'yes' ) {
+		$strsql .= "LEFT JOIN ciniki_exhibition_contact_images ON ("
+			. "ciniki_exhibition_participants.contact_id = ciniki_exhibition_contact_images.contact_id "
+			. "AND ciniki_exhibition_contact_images.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+			. ") ";
+	}
+
+	$strsql .= "WHERE ciniki_exhibition_participants.exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
+		. "AND ciniki_exhibition_participants.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
 		. "";
 	if( isset($args['type']) && $args['type'] != '' ) {
 		$strsql .= "AND (ciniki_exhibition_participants.type&'" . ciniki_core_dbQuote($ciniki, $args['type']) . "') > 0 ";
@@ -75,14 +105,33 @@ function ciniki_exhibitions_participantList($ciniki) {
 	ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');
 	$statuses = array('0'=>'Unknown', '1'=>'Applied', '10'=>'Accepted', '60'=>'Rejected');
 	if( isset($args['categorized']) && $args['categorized'] == 'yes' ) {
-		$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
-			array('container'=>'categories', 'fname'=>'category', 'name'=>'category',
-				'fields'=>array('name'=>'category')),
-			array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
-				'fields'=>array('id', 'first', 'last', 'company', 'title', 'status', 'status_text'),
-				'maps'=>array('status'=>$statuses),
-				),
-			));
+		if( isset($args['details']) && $args['details'] == 'yes' ) {
+			$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
+				array('container'=>'categories', 'fname'=>'category', 'name'=>'category',
+					'fields'=>array('name'=>'category')),
+				array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
+					'fields'=>array('id', 'first', 'last', 'company', 'title', 'status', 'status_text',
+						'address1', 'address2', 'city', 'province', 'postal',
+						'phone_home', 'phone_work', 'phone_cell', 'phone_fax', 'email',
+						'webvisible', 'latitude', 'longitude',
+						'primary_image_id', 'short_description', 'description', 'images'),
+					'lists'=>array('images'),
+					'maps'=>array('status_text'=>$statuses),
+					),
+				));
+		} else {
+			$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
+				array('container'=>'categories', 'fname'=>'category', 'name'=>'category',
+					'fields'=>array('name'=>'category')),
+				array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
+					'fields'=>array('id', 'first', 'last', 'company', 'title', 'status', 'status_text',
+						'address1', 'address2', 'city', 'province', 'postal',
+						'phone_home', 'phone_work', 'phone_cell', 'phone_fax', 'email',
+						'webvisible'),
+					'maps'=>array('status_text'=>$statuses),
+					),
+				));
+		}
 		if( $rc['stat'] != 'ok' ) {
 			return $rc;
 		}
@@ -91,12 +140,29 @@ function ciniki_exhibitions_participantList($ciniki) {
 		}
 		return array('stat'=>'ok', 'categories'=>array());
 	} else {
-		$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
-			array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
-				'fields'=>array('id', 'first', 'last', 'company', 'title', 'status', 'status_text'),
-				'maps'=>array('status'=>$statuses),
-				),
-			));
+		if( isset($args['details']) && $args['details'] == 'yes' ) {
+			$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
+				array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
+					'fields'=>array('id', 'first', 'last', 'company', 'title', 'status', 'status_text',
+						'address1', 'address2', 'city', 'province', 'postal',
+						'phone_home', 'phone_work', 'phone_cell', 'phone_fax', 'email',
+						'webvisible', 'latitude', 'longitude',
+						'primary_image_id', 'short_description', 'description', 'images'),
+					'lists'=>array('images'),
+					'maps'=>array('status_text'=>$statuses),
+					),
+				));
+		} else {
+			$rc = ciniki_core_dbHashQueryTree($ciniki, $strsql, 'ciniki.exhibitions', array(
+				array('container'=>'participants', 'fname'=>'id', 'name'=>'participant',
+					'fields'=>array('id', 'first', 'last', 'company', 'title', 'status', 'status_text',
+						'address1', 'address2', 'city', 'province', 'postal',
+						'phone_home', 'phone_work', 'phone_cell', 'phone_fax', 'email',
+						'webvisible'),
+					'maps'=>array('status_text'=>$statuses),
+					),
+				));
+		}
 		if( $rc['stat'] != 'ok' ) {
 			return $rc;
 		}

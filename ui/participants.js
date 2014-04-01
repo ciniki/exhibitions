@@ -16,9 +16,10 @@ function ciniki_exhibitions_participants() {
 		this.exhibitors.data = {};
 		this.exhibitors.exhibition_id = 0;
 		this.exhibitors.sections = {
-			'_':{'label':'', 'type':'simplegrid', 'num_cols':1,
-				'headerValues':null,
-				'cellClasses':['multiline'],
+			'_':{'label':'', 'type':'simplegrid', 'sortable':'yes', 'num_cols':2,
+				'headerValues':['Name/Company', 'Status'],
+				'sortTypes':['text', 'text'],
+				'cellClasses':['multiline', 'multiline'],
 				'noData':'No participants',
 				'addTxt':'Add Exhibitor',
 				'addFn':'M.ciniki_exhibitions_participants.showEdit(\'M.ciniki_exhibitions_participants.showExhibitors();\',M.ciniki_exhibitions_participants.exhibitors.exhibition_id,0,0,\'exhibitor\');',
@@ -26,10 +27,14 @@ function ciniki_exhibitions_participants() {
 			};
 		this.exhibitors.sectionData = function(s) { return this.data; }
 		this.exhibitors.cellValue = function(s, i, j, d) {
-			if( d.participant.company != null && d.participant.company != '' ) {
-				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span><span class="subtext">' + d.participant.company + '</span>';
-			} 
-			return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
+			if( j == 0 ) {
+				if( d.participant.company != null && d.participant.company != '' ) {
+					return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span><span class="subtext">' + d.participant.company + '</span>';
+				} 
+				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
+			} else if( j == 1 ) {
+				return '<span class="maintext">' + d.participant.status_text + '</span><span class="subtext">' + d.participant.webvisible + '</span>';
+			}
 		};
 		this.exhibitors.rowFn = function(s, i, d) { 
 			return 'M.ciniki_exhibitions_participants.showParticipant(\'M.ciniki_exhibitions_participants.showExhibitors();\',\'' + this.exhibition_id + '\',\'' + d.participant.id + '\',\'exhibitor\');'; 
@@ -47,7 +52,7 @@ function ciniki_exhibitions_participants() {
 		this.sponsors.exhibition_id = 0;
 		this.sponsors.sections = {
 			'_':{'label':'', 'type':'simplegrid', 'num_cols':1,
-				'headerValues':null,
+				'headerValues':['Name/Company'],
 				'cellClasses':['multiline'],
 				'noData':'No participants',
 				'addTxt':'Add Sponsor',
@@ -56,10 +61,12 @@ function ciniki_exhibitions_participants() {
 			};
 		this.sponsors.sectionData = function(s) { return this.data; }
 		this.sponsors.cellValue = function(s, i, j, d) {
-			if( d.participant.company != null && d.participant.company != '' ) {
-				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span><span class="subtext">' + d.participant.company + '</span>';
-			} 
-			return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
+			if( j == 0 ) {
+				if( d.participant.company != null && d.participant.company != '' ) {
+					return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span><span class="subtext">' + d.participant.company + '</span>';
+				} 
+				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
+			}
 		};
 		this.sponsors.rowFn = function(s, i, d) { 
 			return 'M.ciniki_exhibitions_participants.showParticipant(\'M.ciniki_exhibitions_participants.showSponsors();\',\'' + this.exhibition_id + '\',\'' + d.participant.id + '\',\'sponsor\');'; 
@@ -76,9 +83,10 @@ function ciniki_exhibitions_participants() {
 		this.tourexhibitors.data = {};
 		this.tourexhibitors.exhibition_id = 0;
 		this.tourexhibitors.sections = {
-			'_':{'label':'', 'type':'simplegrid', 'num_cols':1,
-				'headerValues':null,
-				'cellClasses':['multiline'],
+			'_':{'label':'', 'type':'simplegrid', 'sortable':'yes', 'num_cols':2,
+				'headerValues':['Name/Company', 'Status'],
+				'sortTypes':['text', 'text'],
+				'cellClasses':['multiline', 'multiline'],
 				'noData':'No participants',
 				'addTxt':'Add Exhibitor',
 				'addFn':'M.ciniki_exhibitions_participants.showEdit(\'M.ciniki_exhibitions_participants.showTourExhibitors();\',M.ciniki_exhibitions_participants.tourexhibitors.exhibition_id,0,0,\'tourexhibitor\');',
@@ -86,15 +94,20 @@ function ciniki_exhibitions_participants() {
 			};
 		this.tourexhibitors.sectionData = function(s) { return this.data; }
 		this.tourexhibitors.cellValue = function(s, i, j, d) {
-			if( d.participant.company != null && d.participant.company != '' ) {
-				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span><span class="subtext">' + d.participant.company + '</span>';
-			} 
-			return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
+			if( j == 0 ) {
+				if( d.participant.company != null && d.participant.company != '' ) {
+					return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span><span class="subtext">' + d.participant.company + '</span>';
+				} 
+				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
+			} else if( j == 1 ) {
+				return '<span class="maintext">' + d.participant.status_text + '</span><span class="subtext">' + d.participant.webvisible + '</span>';
+			}
 		};
 		this.tourexhibitors.rowFn = function(s, i, d) { 
 			return 'M.ciniki_exhibitions_participants.showParticipant(\'M.ciniki_exhibitions_participants.showTourExhibitors();\',\'' + this.exhibition_id + '\',\'' + d.participant.id + '\',\'tourexhibitor\');'; 
 		};
 		this.tourexhibitors.addButton('add', 'Add', 'M.ciniki_exhibitions_participants.showEdit(\'M.ciniki_exhibitions_participants.showTourExhibitors();\',M.ciniki_exhibitions_participants.tourexhibitors.exhibition_id,0,0,\'tour\'');
+		this.tourexhibitors.addButton('tools', 'Tools', 'M.startApp(\'ciniki.exhibitions.tools\',null,\'M.ciniki_exhibitions_participants.showTourExhibitors();\',\'mc\',{\'type\':0x40,\'exhibition_id\':M.ciniki_exhibitions_participants.tourexhibitors.exhibition_id});');
 		this.tourexhibitors.addClose('Back');
 
 		//
@@ -445,6 +458,11 @@ function ciniki_exhibitions_participants() {
 		};
 		this.edit.addButton('save', 'Save', 'M.ciniki_exhibitions_participants.saveContact();');
 		this.edit.addClose('Cancel');
+
+		//
+		// The tour exhibitors tools
+		//
+		this.tourtools 
 	}
 	
 	this.start = function(cb, appPrefix, aG) {
@@ -490,7 +508,13 @@ function ciniki_exhibitions_participants() {
 	}
 
 	this.startFinish = function(cb, args) {
-		if( args.exhibition_id != null 
+		if( args.exhibition_id != null && args.participant_id != null 
+			&& args.edit != null && args.edit == 'yes' && args.type != null ) {
+			this.showEdit(cb, args.exhibition_id, args.participant_id, null, args.type);
+		} else if( args.exhibition_id != null && args.participant_id != null 
+			&& args.type != null ) {
+			this.showParticipant(cb, args.exhibition_id, args.participant_id, args.type);
+		} else if( args.exhibition_id != null 
 			&& args.exhibitors != null && args.exhibitors == 'yes' ) {
 			this.showExhibitors(cb, args.exhibition_id);
 		} else if( args.exhibition_id != null 
