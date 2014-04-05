@@ -36,7 +36,7 @@
 # mailing_postal:
 #
 # primary_image_id:	The ID of the image in ciniki.images to use as the contact's image.
-# description:		The short description for use in lists.
+# short_description:		The short description for use in lists.
 # description:		The description/bio of the contact.
 # notes:			The private notes about the contact.
 #
