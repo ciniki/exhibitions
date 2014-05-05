@@ -16,10 +16,10 @@ function ciniki_exhibitions_participants() {
 		this.exhibitors.data = {};
 		this.exhibitors.exhibition_id = 0;
 		this.exhibitors.sections = {
-			'_':{'label':'', 'type':'simplegrid', 'sortable':'yes', 'num_cols':2,
-				'headerValues':['Name/Company', 'Status'],
-				'sortTypes':['text', 'text'],
-				'cellClasses':['multiline', 'multiline'],
+			'_':{'label':'', 'type':'simplegrid', 'sortable':'yes', 'num_cols':3,
+				'headerValues':['Name/Company', 'Category', 'Status'],
+				'sortTypes':['text', 'text', 'text'],
+				'cellClasses':['multiline', 'multiline', 'multiline'],
 				'noData':'No participants',
 				'addTxt':'Add Exhibitor',
 				'addFn':'M.ciniki_exhibitions_participants.showEdit(\'M.ciniki_exhibitions_participants.showExhibitors();\',M.ciniki_exhibitions_participants.exhibitors.exhibition_id,0,0,\'exhibitor\');',
@@ -33,6 +33,8 @@ function ciniki_exhibitions_participants() {
 				} 
 				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
 			} else if( j == 1 ) {
+				return '<span class="maintext">' + d.participant.category + '</span><span class="subtext">' + d.participant.location + '</span>';
+			} else if( j == 2 ) {
 				return '<span class="maintext">' + d.participant.status_text + '</span><span class="subtext">' + d.participant.webvisible + '</span>';
 			}
 		};
