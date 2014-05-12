@@ -16,6 +16,7 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 		. "ciniki_exhibition_contacts.company, "
 		. "ciniki_exhibition_contacts.permalink, "
 		. "ciniki_exhibition_contacts.url, "
+		. "ciniki_exhibition_contacts.studio_name, "
 		. "ciniki_exhibition_contacts.address1, "
 		. "ciniki_exhibition_contacts.address2, "
 		. "ciniki_exhibition_contacts.city, "
@@ -56,7 +57,7 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 	$rc = ciniki_core_dbHashQueryIDTree($ciniki, $strsql, 'ciniki.exhibitions', array(
 		array('container'=>'participants', 'fname'=>'id', 
 			'fields'=>array('id', 'permalink', 'contact', 'company', 'image_id'=>'primary_image_id', 
-				'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
+				'studio_name', 'address1', 'address2', 'city', 'province', 'postal', 'latitude', 'longitude', 
 				'url', 'description')),
 		array('container'=>'images', 'fname'=>'image_id', 
 			'fields'=>array('image_id', 'title'=>'image_name', 'permalink'=>'image_permalink',
