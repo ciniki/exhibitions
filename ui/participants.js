@@ -155,7 +155,7 @@ function ciniki_exhibitions_participants() {
 			'_image':{'label':'', 'aside':'yes', 'fields':{
 				'primary_image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'history':'no'},
 				}},
-			'info':{'label':'', 'list':{
+			'info':{'label':'', 'aside':'yes', 'list':{
 				'name':{'label':'Name'},
 				'company':{'label':'Company', 'visible':'no'},
 				'email':{'label':'Email', 'visible':'no'},
@@ -165,29 +165,29 @@ function ciniki_exhibitions_participants() {
 				'phone_fax':{'label':'Fax', 'visible':'no'},
 				'url':{'label':'Website', 'visible':'no'},
 				}},
-			'address':{'label':'', 'visible':'no', 'list':{
+			'address':{'label':'', 'aside':'yes', 'visible':'no', 'list':{
 				'studio_name':{'label':'Studio Name'},
 				'address1':{'label':'Display Address'},
 				'mailing_address1':{'label':'Mailing Address'},
 				'latlong':{'label':'Lat/Long'},
 				}},
-			'organizer':{'label':'Organization', 'visible':'no', 'list':{
+			'organizer':{'label':'Organization', 'aside':'yes', 'visible':'no', 'list':{
 				'title':{'label':'Title'},
 				}},
-			'exhibitor':{'label':'Organization', 'visible':'no', 'list':{
+			'exhibitor':{'label':'Organization', 'aside':'yes', 'visible':'no', 'list':{
 				'category':{'label':'Category'},
 				'status_text':{'label':'Status'},
 				'webvisible':{'label':'Website'},
 				'location':{'label':'Location'},
 				}},
-			'sponsor':{'label':'Organization', 'visible':'no', 'list':{
+			'sponsor':{'label':'Organization', 'aside':'yes', 'visible':'no', 'list':{
 				'level':{'label':'Level'},
 				'sequence':{'label':'Sequence'},
 				'category':{'label':'Category'},
 				'webvisible':{'label':'Website'},
 				'location':{'label':'Location'},
 				}},
-			'tourexhibitor':{'label':'Organization', 'visible':'no', 'list':{
+			'tourexhibitor':{'label':'Organization', 'aside':'yes', 'visible':'no', 'list':{
 				'category':{'label':'Category'},
 				'status_text':{'label':'Status'},
 				'webvisible':{'label':'Website'},
@@ -331,12 +331,12 @@ function ciniki_exhibitions_participants() {
 			'_image':{'label':'', 'aside':'yes', 'fields':{
 				'primary_image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'controls':'all', 'history':'no'},
 			}},
-			'name':{'label':'', 'fields':{
+			'name':{'label':'', 'aside':'yes', 'fields':{
 				'first':{'label':'First Name', 'type':'text', 'livesearch':'yes'},
 				'last':{'label':'Last Name', 'type':'text', 'livesearch':'yes'},
 				'company':{'label':'Business', 'type':'text', 'livesearch':'yes'},
 				}},
-			'organization':{'label':'Organization', 'visible':'no', 'fields':{
+			'organization':{'label':'Organization', 'aside':'yes', 'visible':'no', 'fields':{
 				'level':{'label':'Level', 'active':'no', 'type':'multitoggle', 'options':{}},
 				'sequence':{'label':'Order', 'active':'no', 'type':'text', 'hint':'255-1', 'size':'small'},
 				'category':{'label':'Category', 'active':'no', 'type':'text', 'livesearch':'yes', 'livesearchempty':'yes'},
@@ -345,7 +345,7 @@ function ciniki_exhibitions_participants() {
 				'title':{'label':'Title', 'active':'no', 'type':'text'},
 				'location':{'label':'Location', 'type':'text'},
 				}},
-			'contact':{'label':'Contact Info', 'fields':{
+			'contact':{'label':'Contact Info', 'aside':'yes', 'fields':{
 				'email':{'label':'Email', 'type':'text'},
 				'phone_home':{'label':'Home Phone', 'type':'text'},
 				'phone_work':{'label':'Work Phone', 'type':'text'},
@@ -353,7 +353,7 @@ function ciniki_exhibitions_participants() {
 				'phone_fax':{'label':'Fax Phone', 'type':'text'},
 				'url':{'label':'Website', 'type':'text'},
 				}},
-			'address':{'label':'Gallery Address', 'fields':{
+			'address':{'label':'Gallery Address', 'aside':'yes', 'fields':{
 				'studio_name':{'label':'Studio Name', 'type':'text'},
 				'address1':{'label':'Address', 'type':'text'},
 				'address2':{'label':'', 'type':'text'},
@@ -363,10 +363,10 @@ function ciniki_exhibitions_participants() {
 				'latitude':{'label':'Latitude', 'type':'text'},
 				'longitude':{'label':'Longitude', 'type':'text'},
 				}},
-			'_address_buttons':{'label':'', 'buttons':{
+			'_address_buttons':{'label':'', 'aside':'yes', 'buttons':{
 				'save':{'label':'Lookup Lat/Long', 'fn':'M.ciniki_exhibitions_participants.lookupLatLong();'},
 				}},
-			'mailing_address':{'label':'Mailing Address', 'fields':{
+			'mailing_address':{'label':'Mailing Address', 'aside':'yes', 'fields':{
 				'mailing_address1':{'label':'Address', 'type':'text'},
 				'mailing_address2':{'label':'', 'type':'text'},
 				'mailing_city':{'label':'City', 'type':'text'},
