@@ -994,11 +994,6 @@ function ciniki_exhibitions_participants() {
 			if (status == google.maps.GeocoderStatus.OK) {
 				M.ciniki_exhibitions_participants.edit.setFieldValue('latitude', results[0].geometry.location.lat());
 				M.ciniki_exhibitions_participants.edit.setFieldValue('longitude', results[0].geometry.location.lng());
-//				map.setCenter(results[0].geometry.location);
-//				var marker = new google.maps.Marker({
-//					map: map,
-//					position: results[0].geometry.location
-//					});
 			} else {
 				alert('Geocode was not successful for the following reason: ' + status);
 			}
