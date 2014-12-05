@@ -14,6 +14,8 @@
 # first:			The first name of the contact.
 # last:				The last name of the contact.
 # company:			The company/business name for the contact.
+# permalink:		The permalink for the exhibition contact to be used on the website.
+#
 # email:			The email address for the contact.
 # passcode:			**future** The passcode/password for the contact to update information through the website.
 # phone_home:		The home phone number of the contact.
@@ -24,16 +26,19 @@
 #
 # studio_name:		The name for the studio/display location.
 # address1:			The address for the studio/display location.
-# address2:
-# city:
-# province:
-# postal:
+# address2:			The second line address for the studio/display location.
+# city:				The city for the studio/display location.
+# province:			The province for the studio/display location.
+# postal:			The postal for the studio/display location.
 #
-# mailing_address1:	The mailing address of the contact
-# mailing_address2:
-# mailing_city:
-# mailing_province:
-# mailing_postal:
+# latitude:			The latitude of the studio/display location.
+# longitude:		The longitude of the studio/display location.
+#
+# mailing_address1:	The mailing address of the contact.
+# mailing_address2: The second line address of the contact.
+# mailing_city:		The city of the contact.
+# mailing_province: The province of the contact.
+# mailing_postal:	The postal of the contact.
 #
 # primary_image_id:	The ID of the image in ciniki.images to use as the contact's image.
 # short_description:		The short description for use in lists.
