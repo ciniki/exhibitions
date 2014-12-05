@@ -40,6 +40,8 @@
 # level:			The level of sponsorship.  The names for the exhibition
 #					levels are stored in the ciniki_exhibition_details table.
 #
+# sequence:			The order the participant should appear in listings.
+#
 # webflags:			The flags to displaying the image on the website.
 #
 #					0x01 - Private (do not show on website)
