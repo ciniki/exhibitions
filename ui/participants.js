@@ -271,21 +271,6 @@ function ciniki_exhibitions_participants() {
 //				return 'M.startApp(\'ciniki.exhibitions.contactimages\',null,\'M.ciniki_exhibitions_participants.showParticipant();\',\'mc\',{\'contact_image_id\':\'' + d.image.id + '\'});';
 //			}
 //		};
-		this.participant.thumbSrc = function(s, i, d) {
-			if( d.image.image_data != null && d.image.image_data != '' ) {
-				return d.image.image_data;
-			} else {
-				return '/ciniki-mods/core/ui/themes/default/img/noimage_75.jpg';
-			}
-		};
-		this.participant.thumbTitle = function(s, i, d) {
-			if( d.image.name != null ) { return d.image.name; }
-			return '';
-		};
-		this.participant.thumbID = function(s, i, d) {
-			if( d.image.id != null ) { return d.image.id; }
-			return 0;
-		};
 		this.participant.thumbFn = function(s, i, d) {
 			return 'M.startApp(\'ciniki.exhibitions.contactimages\',null,\'M.ciniki_exhibitions_participants.showParticipant();\',\'mc\',{\'contact_image_id\':\'' + d.image.id + '\'});';
 		};
