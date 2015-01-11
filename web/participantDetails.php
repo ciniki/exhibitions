@@ -40,6 +40,7 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
 			. ") "
 		. "LEFT JOIN ciniki_exhibition_contact_images ON ("
 			. "ciniki_exhibition_contacts.id = ciniki_exhibition_contact_images.contact_id "
+			. "AND ciniki_exhibition_contact_images.image_id > 0 "
 			. "AND (ciniki_exhibition_contact_images.webflags&0x01) = 0 "
 			. ") "
 		. "WHERE ciniki_exhibition_contacts.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
