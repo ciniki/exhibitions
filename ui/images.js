@@ -82,12 +82,12 @@ function ciniki_exhibitions_images() {
 			'mc', 'medium', 'sectioned', 'ciniki.exhibitions.images.edit');
 		this.add.default_data = {'image_id':0};
 		this.add.data = {'image_id':0};
-		this.add.rotateImage = this.rotateImage;
+//		this.add.rotateImage = this.rotateImage;
 		this.add.uploadImage = function(i) { return 'M.ciniki_exhibitions_images.uploadDropImagesAdd(\'' + i + '\');' };
 		this.add.uploadDropFn = function() { return M.ciniki_exhibitions_images.uploadDropImagesAdd; };
 		this.add.sections = {
 			'_image':{'label':'Photo', 'fields':{
-				'image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes'},
+				'image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'controls':'all'},
 			}},
 			'info':{'label':'Information', 'type':'simpleform', 'fields':{
 				'name':{'label':'Title', 'type':'text'},
@@ -143,12 +143,12 @@ function ciniki_exhibitions_images() {
 		this.edit.default_data = {};
 		this.edit.data = {};
 		this.edit.exhibition_id = 0;
-		this.edit.rotateImage = this.rotateImage;
+//		this.edit.rotateImage = this.rotateImage;
 		this.edit.uploadImage = function(i) { return 'M.ciniki_exhibitions_images.uploadDropImagesEdit(\'' + i + '\');' };
 		this.edit.uploadDropFn = function() { return M.ciniki_exhibitions_images.uploadDropImagesEdit; };
 		this.edit.sections = {
 			'_image':{'label':'Photo', 'fields':{
-				'image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes'},
+				'image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'controls':'all'},
 			}},
 			'info':{'label':'Information', 'type':'simpleform', 'fields':{
 				'name':{'label':'Title', 'type':'text'},
