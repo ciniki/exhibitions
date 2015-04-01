@@ -160,7 +160,7 @@ function ciniki_exhibitions_participantListExcel($ciniki) {
 	foreach($participants as $pid => $participant) {
 		$participant = $participant['participant'];
 		$i = 0;
-		$sheet->setCellValueByColumnAndRow($i++, $row, $participant['type'], false);
+		$sheet->setCellValueByColumnAndRow($i++, $row, $participant['first'], false);
 		$sheet->setCellValueByColumnAndRow($i++, $row, $participant['last'], false);
 		$sheet->setCellValueByColumnAndRow($i++, $row, $participant['company'], false);
 		$sheet->setCellValueByColumnAndRow($i++, $row, $participant['phone_home'], false);
