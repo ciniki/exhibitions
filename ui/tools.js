@@ -19,7 +19,11 @@ function ciniki_exhibitions_tools() {
 				'missing':{'label':'Missing Information', 
 					'fn':'M.ciniki_exhibitions_tools.showTourMissing(\'M.ciniki_exhibitions_tools.showTour()\',M.ciniki_exhibitions_tools.tour.exhibition_id);'},
 			}},
-			};
+			'exports':{'label':'Exports', 'list':{
+				'missing':{'label':'Download Excel Participant List', 
+					'fn':'M.ciniki_exhibitions_tools.downloadExcel(\'ciniki.exhibitions.participantListExcel\',M.ciniki_exhibitions_tools.tour.exhibition_id);'},
+			}},
+		};
 		this.tour.addClose('Back');
 
 		//
@@ -142,5 +146,9 @@ function ciniki_exhibitions_tools() {
 				p.refresh();
 				p.show(cb);
 			});
+	};
+
+	this.downloadExcel = function(api, tour_id) {
+		M.api.openFile(api, {'business_id':M.curBusinessID, 'exhibition_id':tour_id, 'type':0x40});
 	};
 }
