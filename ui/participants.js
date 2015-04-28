@@ -208,7 +208,7 @@ function ciniki_exhibitions_participants() {
 		this.participant.sectionData = function(s) {
 			if( s == 'images' ) { return this.data.images; }
 			if( s == 'short_description' || s == 'description' || s == 'notes' ) { return this.data[s].replace(/\n/g, '<br/>'); }
-			return this.sections[s].list;
+				return this.sections[s].list;
 			};
 		this.participant.listLabel = function(s, i, d) {
 			if( s == 'info' || s == 'organizer' || s == 'exhibitor' || s == 'sponsor' || s == 'tourexhibitor' || s == 'address' ) { 
