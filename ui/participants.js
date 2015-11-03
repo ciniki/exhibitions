@@ -152,7 +152,7 @@ function ciniki_exhibitions_participants() {
 		this.participant.participant_id = 0;
 		this.participant.exhibition_id = 0;
 		this.participant.sections = {
-			'_image':{'label':'', 'aside':'yes', 'fields':{
+			'_image':{'label':'', 'aside':'yes', 'type':'imageform', 'fields':{
 				'primary_image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'history':'no'},
 				}},
 			'info':{'label':'', 'aside':'yes', 'list':{
@@ -313,7 +313,7 @@ function ciniki_exhibitions_participants() {
 		this.edit.contact_id = 0;
 		this.edit.participant_type = 0;
 		this.edit.sections = {
-			'_image':{'label':'', 'aside':'yes', 'fields':{
+			'_image':{'label':'', 'aside':'yes', 'type':'imageform', 'fields':{
 				'primary_image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'controls':'all', 'history':'no'},
 			}},
 			'name':{'label':'', 'aside':'yes', 'fields':{

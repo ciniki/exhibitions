@@ -86,7 +86,7 @@ function ciniki_exhibitions_images() {
 		this.add.uploadImage = function(i) { return 'M.ciniki_exhibitions_images.uploadDropImagesAdd(\'' + i + '\');' };
 		this.add.uploadDropFn = function() { return M.ciniki_exhibitions_images.uploadDropImagesAdd; };
 		this.add.sections = {
-			'_image':{'label':'Photo', 'fields':{
+			'_image':{'label':'Photo', 'type':'imageform', 'fields':{
 				'image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'controls':'all'},
 			}},
 			'info':{'label':'Information', 'type':'simpleform', 'fields':{
@@ -147,7 +147,7 @@ function ciniki_exhibitions_images() {
 		this.edit.uploadImage = function(i) { return 'M.ciniki_exhibitions_images.uploadDropImagesEdit(\'' + i + '\');' };
 		this.edit.uploadDropFn = function() { return M.ciniki_exhibitions_images.uploadDropImagesEdit; };
 		this.edit.sections = {
-			'_image':{'label':'Photo', 'fields':{
+			'_image':{'label':'Photo', 'type':'imageform', 'fields':{
 				'image_id':{'label':'', 'type':'image_id', 'hidelabel':'yes', 'controls':'all'},
 			}},
 			'info':{'label':'Information', 'type':'simpleform', 'fields':{
