@@ -85,10 +85,10 @@ function ciniki_exhibitions_participants() {
 		this.tourexhibitors.data = {};
 		this.tourexhibitors.exhibition_id = 0;
 		this.tourexhibitors.sections = {
-			'_':{'label':'', 'type':'simplegrid', 'sortable':'yes', 'num_cols':2,
-				'headerValues':['Name/Company', 'Status'],
+			'_':{'label':'', 'type':'simplegrid', 'sortable':'yes', 'num_cols':3,
+				'headerValues':['Name/Company', 'Category', 'Status'],
 				'sortTypes':['text', 'text'],
-				'cellClasses':['multiline', 'multiline'],
+				'cellClasses':['multiline', 'multiline', 'multiline'],
 				'noData':'No participants',
 				'addTxt':'Add Exhibitor',
 				'addFn':'M.ciniki_exhibitions_participants.showEdit(\'M.ciniki_exhibitions_participants.showTourExhibitors();\',M.ciniki_exhibitions_participants.tourexhibitors.exhibition_id,0,0,\'tourexhibitor\');',
@@ -102,6 +102,8 @@ function ciniki_exhibitions_participants() {
 				} 
 				return '<span class="maintext">' + d.participant.first + ' ' + d.participant.last + '</span>';
 			} else if( j == 1 ) {
+				return '<span class="maintext">' + d.participant.category + '</span>';
+			} else if( j == 2 ) {
 				return '<span class="maintext">' + d.participant.status_text + '</span><span class="subtext">' + d.participant.webvisible + '</span>';
 			}
 		};
