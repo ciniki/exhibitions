@@ -7,36 +7,36 @@
 # use-organizers: yes|no
 # use-exhibitors: yes|no
 # use-sponsors: yes|no
-# exhibitor-name-singular:	Artist, Exhibitor, Vendor
-# exhibitor-name-plural:	Artists, Exhibitors, Vendors
+# exhibitor-name-singular:  Artist, Exhibitor, Vendor
+# exhibitor-name-plural:    Artists, Exhibitors, Vendors
 #
 # The different levels of sponsorship, if they want to use them.
 # 
-# sponsor-level-10-name:	The name for the lowest level of sponsor
-# sponsor-level-20-name: 	Bronze sponsor
-# sponsor-level-30-name:	Silver sponsor
-# sponsor-level-40-name:	Gold Sponsor
-# sponsor-level-50-name:	Platnium Sponsor
+# sponsor-level-10-name:    The name for the lowest level of sponsor
+# sponsor-level-20-name:    Bronze sponsor
+# sponsor-level-30-name:    Silver sponsor
+# sponsor-level-40-name:    Gold Sponsor
+# sponsor-level-50-name:    Platnium Sponsor
 #
 # location-address: The full address for the location of the exhibition
 #
 # Fields
 # ------
 #
-# business_id:		The ID of the business the exhibition detail is for.
-# exhibition_id:	The ID of the exhibition the detail is for.
-# detail_key:		The unique key for the detail.  The key must be unique for each exhibition
-# detail_value:		The value stored for the key.
-# date_added:		The UTC date and time the entry was added.
-# last_updated:		The UTC date and time the entry was last updated.
+# business_id:      The ID of the business the exhibition detail is for.
+# exhibition_id:    The ID of the exhibition the detail is for.
+# detail_key:       The unique key for the detail.  The key must be unique for each exhibition
+# detail_value:     The value stored for the key.
+# date_added:       The UTC date and time the entry was added.
+# last_updated:     The UTC date and time the entry was last updated.
 #
 create table ciniki_exhibition_details (
-	business_id int not null,
-	exhibition_id int not null,
-	detail_key varchar(50) not null,
-	detail_value varchar(6000) not null,
-	date_added datetime not null,
-	last_updated datetime not null,
-	primary key (business_id, exhibition_id, detail_key),
-	index (last_updated)
+    business_id int not null,
+    exhibition_id int not null,
+    detail_key varchar(50) not null,
+    detail_value varchar(6000) not null,
+    date_added datetime not null,
+    last_updated datetime not null,
+    primary key (business_id, exhibition_id, detail_key),
+    index (last_updated)
 ) ENGINE='InnoDB', COMMENT='v1.01';
