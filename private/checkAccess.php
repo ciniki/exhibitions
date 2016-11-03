@@ -26,7 +26,7 @@ function ciniki_exhibitions_checkAccess($ciniki, $business_id, $method) {
     }
 
     if( !isset($rc['ruleset']) ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'115', 'msg'=>'No permissions granted'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.1', 'msg'=>'No permissions granted'));
     }
 
     //
@@ -64,6 +64,6 @@ function ciniki_exhibitions_checkAccess($ciniki, $business_id, $method) {
     //
     // By default, fail
     //
-    return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'116', 'msg'=>'Access denied.'));
+    return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.2', 'msg'=>'Access denied.'));
 }
 ?>

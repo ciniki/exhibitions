@@ -60,7 +60,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
                 return $rc;
             }
             if( !isset($rc['image']) ) {
-                return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'257', 'msg'=>'Unable to update image'));
+                return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.22', 'msg'=>'Unable to update image'));
             }
             $args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($rc['image']['uuid'])));
         }
@@ -77,7 +77,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
             return $rc;
         }
         if( $rc['num_rows'] > 0 ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'255', 'msg'=>'You already have an image with this name, please choose another name'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.23', 'msg'=>'You already have an image with this name, please choose another name'));
         }
     } 
 

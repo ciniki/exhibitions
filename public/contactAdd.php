@@ -56,7 +56,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
     $args = $rc['args'];
 
     if( $args['first'] == '' && $args['last'] == '' && $args['company'] == '' ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'169', 'msg'=>'You must specify a name or company'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.3', 'msg'=>'You must specify a name or company'));
     }
 
     if( !isset($args['permalink']) || $args['permalink'] == '' ) {
@@ -95,7 +95,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
         return $rc;
     }
     if( $rc['num_rows'] > 0 ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'171', 'msg'=>'You already have a contact with this name, please choose another name.'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.4', 'msg'=>'You already have a contact with this name, please choose another name.'));
     }
 
     //

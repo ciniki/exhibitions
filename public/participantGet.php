@@ -135,7 +135,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
             return $rc;
         }
         if( !isset($rc['participants']) || !isset($rc['participants'][0]) ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'197', 'msg'=>'Unable to find participant'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.25', 'msg'=>'Unable to find participant'));
         }
         $participant = $rc['participants'][0]['participant'];
         if( !isset($participant['images']) ) {
@@ -167,7 +167,7 @@ function ciniki_exhibitions_participantGet($ciniki) {
             return $rc;
         }
         if( !isset($rc['participants']) || !isset($rc['participants'][0]) ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'165', 'msg'=>'Unable to find participant'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.26', 'msg'=>'Unable to find participant'));
         }
         $participant = $rc['participants'][0]['participant'];
     }

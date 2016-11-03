@@ -73,7 +73,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
         return $rc;
     }
     if( $rc['num_rows'] > 0 ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'111', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.14', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
     }
 
 
@@ -128,7 +128,7 @@ function ciniki_exhibitions_exhibitionAdd(&$ciniki) {
     }
     if( !isset($rc['insert_id']) || $rc['insert_id'] < 1 ) {
         ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'124', 'msg'=>'Unable to add exhibition'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.15', 'msg'=>'Unable to add exhibition'));
     }
     $exhibition_id = $rc['insert_id'];
 

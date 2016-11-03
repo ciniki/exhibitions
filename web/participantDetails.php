@@ -69,7 +69,7 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
         return $rc;
     }
     if( !isset($rc['participants']) || count($rc['participants']) < 1 ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'278', 'msg'=>'Unable to find participant'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.27', 'msg'=>'Unable to find participant'));
     }
     $participant = array_pop($rc['participants']);
 

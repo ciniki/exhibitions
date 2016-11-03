@@ -138,7 +138,7 @@ function ciniki_exhibitions_contactGet($ciniki) {
             return $rc;
         }
         if( !isset($rc['contacts']) || !isset($rc['contacts'][0]) ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'166', 'msg'=>'Unable to find participant'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.5', 'msg'=>'Unable to find participant'));
         }
         $contact = $rc['contacts'][0]['contact'];
         ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'loadCacheThumbnail');
@@ -165,7 +165,7 @@ function ciniki_exhibitions_contactGet($ciniki) {
             return $rc;
         }
         if( !isset($rc['contacts']) || !isset($rc['contacts'][0]) ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'167', 'msg'=>'Unable to find contact'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.6', 'msg'=>'Unable to find contact'));
         }
         $contact = $rc['contacts'][0]['contact'];
     }

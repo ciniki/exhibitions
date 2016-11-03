@@ -60,7 +60,7 @@ function ciniki_exhibitions_exhibitionGet($ciniki) {
         return $rc;
     }
     if( !isset($rc['exhibition']) ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'160', 'msg'=>'Unable to find exhibition'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.16', 'msg'=>'Unable to find exhibition'));
     }
     $exhibition = $rc['exhibition'];
 

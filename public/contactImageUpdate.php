@@ -59,7 +59,7 @@ function ciniki_exhibitions_contactImageUpdate(&$ciniki) {
                 return $rc;
             }
             if( !isset($rc['item']) ) {
-                return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'1280', 'msg'=>'Contact image not found'));
+                return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.11', 'msg'=>'Contact image not found'));
             }
             $args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($rc['item']['uuid'])));
         } else {
@@ -78,7 +78,7 @@ function ciniki_exhibitions_contactImageUpdate(&$ciniki) {
             return $rc;
         }
         if( $rc['num_rows'] > 0 ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'1277', 'msg'=>'You already have an image with this name, please choose another name'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.12', 'msg'=>'You already have an image with this name, please choose another name'));
         }
     }
 

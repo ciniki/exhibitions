@@ -74,7 +74,7 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
             return $rc;
         }
         if( $rc['num_rows'] > 0 ) {
-            return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'128', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.17', 'msg'=>'You already have an exhibition with this name, please choose another name.'));
         }
     }
 
@@ -130,7 +130,7 @@ function ciniki_exhibitions_exhibitionUpdate(&$ciniki) {
     }
     if( !isset($rc['num_affected_rows']) || $rc['num_affected_rows'] != 1 ) {
         ciniki_core_dbTransactionRollback($ciniki, 'ciniki.exhibitions');
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'129', 'msg'=>'Unable to update exhibition'));   
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.18', 'msg'=>'Unable to update exhibition'));   
     }
 
     //

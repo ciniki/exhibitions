@@ -42,7 +42,7 @@ function ciniki_exhibitions_contactImageAdd(&$ciniki) {
     }   
 
     if( $args['contact_id'] <= 0 ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'182', 'msg'=>'No contact specified'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.7', 'msg'=>'No contact specified'));
     }
     
     //
@@ -75,7 +75,7 @@ function ciniki_exhibitions_contactImageAdd(&$ciniki) {
         return $rc;
     }
     if( $rc['num_rows'] > 0 ) {
-        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'177', 'msg'=>'You already have an image with this name, please choose another name'));
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.8', 'msg'=>'You already have an image with this name, please choose another name'));
     }
 
     //
