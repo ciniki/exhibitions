@@ -45,6 +45,23 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
     }
 
     //
+    // Get the exhibition ID
+    //
+    $strsql = "SELECT id, exhibition_id "
+        . "FROM ciniki_exhibition_images "
+        . "WHERE id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
+        . "AND business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "";
+    $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
+    if( $rc['stat'] != 'ok' ) {
+        return $rc;
+    }
+    if( !isset($rc['image']) ) {
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.exhibitions.28', 'msg'=>'The image does not exist.'));
+    }
+    $exhibition_id = $rc['image']['exhibition_id'];
+
+    //
     // Check if permalink should be changed
     //
     if( isset($args['name']) ) {
@@ -70,6 +87,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
         $strsql = "SELECT id FROM ciniki_exhibition_images "
             . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
             . "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
+            . "AND exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
             . "AND id <> '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
             . "";
         $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');

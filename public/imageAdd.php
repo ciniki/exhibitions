@@ -68,6 +68,7 @@ function ciniki_exhibitions_imageAdd(&$ciniki) {
     //
     $strsql = "SELECT id FROM ciniki_exhibition_images "
         . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "AND exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
         . "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
