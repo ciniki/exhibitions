@@ -9,11 +9,11 @@
 # ------
 # id:               The ID of the contact.
 # uuid:             The Universal Unique ID of the contact
-# business_id:      The ID of the business the exhibition is part of.
+# tnid:             The ID of the tenant the exhibition is part of.
 #
 # first:            The first name of the contact.
 # last:             The last name of the contact.
-# company:          The company/business name for the contact.
+# company:          The company/tenant name for the contact.
 # permalink:        The permalink for the exhibition contact to be used on the website.
 #
 # email:            The email address for the contact.
@@ -51,7 +51,7 @@
 create table ciniki_exhibition_contacts (
     id int not null auto_increment,
     uuid char(36) not null,
-    business_id int not null,
+    tnid int not null,
     first varchar(150) not null,
     last varchar(150) not null,
     company varchar(150) not null,
@@ -85,6 +85,6 @@ create table ciniki_exhibition_contacts (
     primary key (id),
     index (first, last, company),
     index (email, passcode),
-    index (business_id, uuid, last_updated),
-    unique index permalink (business_id, permalink)
+    index (tnid, uuid, last_updated),
+    unique index permalink (tnid, permalink)
 ) ENGINE='InnoDB', COMMENT='v1.06';

@@ -16,7 +16,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'fix'=>array('required'=>'no', 'default'=>'no', 'name'=>'Fix Problems'),
         ));
     if( $rc['stat'] != 'ok' ) {
@@ -25,10 +25,10 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
     $args = $rc['args'];
     
     //
-    // Check access to business_id as owner, or sys admin
+    // Check access to tnid as owner, or sys admin
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.dbIntegrityCheck', 0);
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.dbIntegrityCheck', 0);
     if( $rc['stat'] != 'ok' ) {
         return $rc;
     }
@@ -54,7 +54,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
         // Check any references for the objects
         //
         foreach($objects as $o => $obj) {
-            $rc = ciniki_core_objectRefFix($ciniki, $args['business_id'], 'ciniki.exhibitions.'.$o, 0x04);
+            $rc = ciniki_core_objectRefFix($ciniki, $args['tnid'], 'ciniki.exhibitions.'.$o, 0x04);
             if( $rc['stat'] != 'ok' ) {
                 return $rc;
             }
@@ -63,7 +63,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
         //
         // Update the history for ciniki_exhibitions
         //
-        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['business_id'],
+        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['tnid'],
             'ciniki_exhibitions', 'ciniki_exhibition_history', 
             array('uuid', 'name', 'permalink', 'type', 'description', 'tagline', 
                 'start_date', 'end_date'));
@@ -74,7 +74,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
         //
         // Update the history for ciniki_exhibition_contacts
         //
-        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['business_id'],
+        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['tnid'],
             'ciniki_exhibition_contacts', 'ciniki_exhibition_history', 
             array('uuid', 'first', 'last', 'company', 'permalink', 'email', 
                 'passcode', 'phone_home', 'phone_work', 'phone_cell', 'phone_fax',
@@ -86,7 +86,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
         //
         // Update the history for ciniki_exhibition_contact_images
         //
-        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['business_id'],
+        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['tnid'],
             'ciniki_exhibition_contact_images', 'ciniki_exhibition_history', 
             array('uuid', 'contact_id', 'name', 'permalink', 'webflags', 'image_id', 
                 'description', 'url'));
@@ -97,7 +97,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
         //
         // Update the history for ciniki_exhibition_participants
         //
-        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['business_id'],
+        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['tnid'],
             'ciniki_exhibition_participants', 'ciniki_exhibition_history', 
             array('uuid', 'exhibition_id', 'contact_id', 'category', 'type', 
                 'status', 'webflags', 'title', 'location'));
@@ -108,7 +108,7 @@ function ciniki_exhibitions_dbIntegrityCheck($ciniki) {
         //
         // Update the history for ciniki_exhibition_images
         //
-        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['business_id'],
+        $rc = ciniki_core_dbFixTableHistory($ciniki, 'ciniki.exhibitions', $args['tnid'],
             'ciniki_exhibition_images', 'ciniki_exhibition_history', 
             array('uuid', 'exhibition_id', 'name', 'permalink', 'category', 
                 'webflags', 'image_id', 'description'));

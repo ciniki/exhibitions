@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:         The ID of the business to add the exhibition to.
+// tnid:         The ID of the tenant to add the exhibition to.
 // name:                The name of the exhibition.  
 //
 // Returns
@@ -20,7 +20,7 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition'), 
         'contact_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Contact'), 
         'level'=>array('required'=>'no', 'default'=>'0', 'blank'=>'yes', 'validlist'=>array('10','20','30','40','50'), 'name'=>'Level'),
@@ -43,10 +43,10 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.participantAdd', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.participantAdd', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }
@@ -55,6 +55,6 @@ function ciniki_exhibitions_participantAdd(&$ciniki) {
     // Add the participant
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectAdd');
-    return ciniki_core_objectAdd($ciniki, $args['business_id'], 'ciniki.exhibitions.participant', $args, 0x07);
+    return ciniki_core_objectAdd($ciniki, $args['tnid'], 'ciniki.exhibitions.participant', $args, 0x07);
 }
 ?>

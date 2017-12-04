@@ -9,7 +9,7 @@
 // Returns
 // -------
 //
-function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
+function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $tnid) {
 
     $exhibition_id = $settings['page-exhibitions-exhibition'];
     $type = 'sponsor';
@@ -25,10 +25,10 @@ function ciniki_exhibitions_web_sponsorList($ciniki, $settings, $business_id) {
         . "FROM ciniki_exhibition_contacts "
         . "LEFT JOIN ciniki_exhibition_participants ON ("
             . "ciniki_exhibition_contacts.id = ciniki_exhibition_participants.contact_id "
-            . "AND ciniki_exhibition_participants.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
+            . "AND ciniki_exhibition_participants.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
             . "AND ciniki_exhibition_participants.exhibition_id = '" . ciniki_core_dbQuote($ciniki, $exhibition_id) . "' "
             . ") "
-        . "WHERE ciniki_exhibition_contacts.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
+        . "WHERE ciniki_exhibition_contacts.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
         // Check the participant is visible on the website
         . "AND (ciniki_exhibition_participants.webflags&0x01) = 0 "
         // Only get sponsors

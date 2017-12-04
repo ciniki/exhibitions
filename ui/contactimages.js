@@ -39,7 +39,7 @@ function ciniki_exhibitions_contactimages() {
             return ''; 
         };
         this.edit.fieldHistoryArgs = function(s, i) {
-            return {'method':'ciniki.exhibitions.contactImageHistory', 'args':{'business_id':M.curBusinessID, 
+            return {'method':'ciniki.exhibitions.contactImageHistory', 'args':{'tnid':M.curTenantID, 
                 'contact_image_id':this.contact_image_id, 'field':i}};
         };
         this.edit.addDropImage = function(iid) {
@@ -83,7 +83,7 @@ function ciniki_exhibitions_contactimages() {
         if( this.edit.contact_image_id > 0 ) {
             this.edit.sections._buttons.buttons.delete.visible = 'yes';
             var rsp = M.api.getJSONCb('ciniki.exhibitions.contactImageGet', 
-                {'business_id':M.curBusinessID, 'contact_image_id':this.edit.contact_image_id}, function(rsp) {
+                {'tnid':M.curTenantID, 'contact_image_id':this.edit.contact_image_id}, function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);
                         return false;
@@ -107,7 +107,7 @@ function ciniki_exhibitions_contactimages() {
             var c = this.edit.serializeFormData('no');
             if( c != '' ) {
                 var rsp = M.api.postJSONFormData('ciniki.exhibitions.contactImageUpdate', 
-                    {'business_id':M.curBusinessID, 
+                    {'tnid':M.curTenantID, 
                     'contact_image_id':this.edit.contact_image_id}, c,
                         function(rsp) {
                             if( rsp.stat != 'ok' ) {
@@ -123,7 +123,7 @@ function ciniki_exhibitions_contactimages() {
         } else {
             var c = this.edit.serializeForm('yes');
             c += '&contact_id=' + encodeURIComponent(this.edit.contact_id);
-            var rsp = M.api.postJSONFormData('ciniki.exhibitions.contactImageAdd', {'business_id':M.curBusinessID}, c,
+            var rsp = M.api.postJSONFormData('ciniki.exhibitions.contactImageAdd', {'tnid':M.curTenantID}, c,
                 function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);
@@ -137,7 +137,7 @@ function ciniki_exhibitions_contactimages() {
 
     this.deleteImage = function() {
         if( confirm('Are you sure you want to delete this image?') ) {
-            var rsp = M.api.getJSONCb('ciniki.exhibitions.contactImageDelete', {'business_id':M.curBusinessID, 
+            var rsp = M.api.getJSONCb('ciniki.exhibitions.contactImageDelete', {'tnid':M.curTenantID, 
                 'contact_image_id':this.edit.contact_image_id}, function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);

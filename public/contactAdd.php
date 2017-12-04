@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:         The ID of the business to add the exhibition to.
+// tnid:         The ID of the tenant to add the exhibition to.
 // name:                The name of the exhibition.  
 //
 // Returns
@@ -20,7 +20,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'first'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'First Name'),
         'last'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Last Name'),
         'company'=>array('required'=>'no', 'default'=>'', 'trimblanks'=>'yes', 'blank'=>'yes', 'name'=>'Company'),
@@ -75,10 +75,10 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.contactAdd', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.contactAdd', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }
@@ -87,7 +87,7 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
     // Check the permalink doesn't already exist
     //
     $strsql = "SELECT id, permalink FROM ciniki_exhibition_contacts "
-        . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'contact');
@@ -102,6 +102,6 @@ function ciniki_exhibitions_contactAdd(&$ciniki) {
     // Add the contact
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectAdd');
-    return ciniki_core_objectAdd($ciniki, $args['business_id'], 'ciniki.exhibitions.contact', $args, 0x07);
+    return ciniki_core_objectAdd($ciniki, $args['tnid'], 'ciniki.exhibitions.contact', $args, 0x07);
 }
 ?>

@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:         The ID of the business to add the exhibition to.
+// tnid:         The ID of the tenant to add the exhibition to.
 // name:                The name of the exhibition.  
 //
 // Returns
@@ -20,7 +20,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_image_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition Image'), 
         'image_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Image'),
         'name'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Title'), 
@@ -36,10 +36,10 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.imageUpdate', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.imageUpdate', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }
@@ -50,7 +50,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
     $strsql = "SELECT id, exhibition_id "
         . "FROM ciniki_exhibition_images "
         . "WHERE id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
-        . "AND business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "AND tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
     if( $rc['stat'] != 'ok' ) {
@@ -69,7 +69,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
             $args['permalink'] = preg_replace('/ /', '-', preg_replace('/[^a-z0-9 ]/', '', strtolower($args['name'])));
         } else {
             $strsql = "SELECT uuid FROM ciniki_exhibition_images "
-                . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+                . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
                 . "AND id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
                 . "";
             $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
@@ -85,7 +85,7 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
         // Make sure the permalink is unique
         //
         $strsql = "SELECT id FROM ciniki_exhibition_images "
-            . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+            . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
             . "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
             . "AND exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
             . "AND id <> '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
@@ -103,6 +103,6 @@ function ciniki_exhibitions_imageUpdate(&$ciniki) {
     // Update the image
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectUpdate');
-    return ciniki_core_objectUpdate($ciniki, $args['business_id'], 'ciniki.exhibitions.image', $args['exhibition_image_id'], $args, 0x07);
+    return ciniki_core_objectUpdate($ciniki, $args['tnid'], 'ciniki.exhibitions.image', $args['exhibition_image_id'], $args, 0x07);
 }
 ?>

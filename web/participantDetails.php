@@ -9,7 +9,7 @@
 // Returns
 // -------
 //
-function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business_id, $exhibition_id, $permalink) {
+function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $tnid, $exhibition_id, $permalink) {
 
     $strsql = "SELECT ciniki_exhibition_participants.id, "
         . "CONCAT_WS(' ', ciniki_exhibition_contacts.first, ciniki_exhibition_contacts.last) AS contact, "
@@ -35,7 +35,7 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
         . "FROM ciniki_exhibition_contacts "
         . "LEFT JOIN ciniki_exhibition_participants ON ("
             . "ciniki_exhibition_contacts.id = ciniki_exhibition_participants.contact_id "
-            . "AND ciniki_exhibition_participants.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
+            . "AND ciniki_exhibition_participants.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
             . "AND ciniki_exhibition_participants.exhibition_id = '" . ciniki_core_dbQuote($ciniki, $exhibition_id) . "' "
             . ") "
         . "LEFT JOIN ciniki_exhibition_contact_images ON ("
@@ -43,7 +43,7 @@ function ciniki_exhibitions_web_participantDetails($ciniki, $settings, $business
             . "AND ciniki_exhibition_contact_images.image_id > 0 "
             . "AND (ciniki_exhibition_contact_images.webflags&0x01) = 0 "
             . ") "
-        . "WHERE ciniki_exhibition_contacts.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
+        . "WHERE ciniki_exhibition_contacts.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
         . "AND ciniki_exhibition_contacts.permalink = '" . ciniki_core_dbQuote($ciniki, $permalink) . "' "
         // Check the participant is visible on the website
         . "AND (ciniki_exhibition_participants.webflags&0x01) = 0 "

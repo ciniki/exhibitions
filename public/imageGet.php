@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:         The ID of the business to add the exhibition to.
+// tnid:         The ID of the tenant to add the exhibition to.
 // exhibition_image_id: The ID of the exhibition image to get.
 //
 // Returns
@@ -19,7 +19,7 @@ function ciniki_exhibitions_imageGet($ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_image_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Image'),
         )); 
     if( $rc['stat'] != 'ok' ) { 
@@ -29,10 +29,10 @@ function ciniki_exhibitions_imageGet($ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.imageGet', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.imageGet', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }   
@@ -52,7 +52,7 @@ function ciniki_exhibitions_imageGet($ciniki) {
         . "ciniki_exhibition_images.image_id, "
         . "ciniki_exhibition_images.description "
         . "FROM ciniki_exhibition_images "
-        . "WHERE ciniki_exhibition_images.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "WHERE ciniki_exhibition_images.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "AND ciniki_exhibition_images.id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_image_id']) . "' "
         . "";
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');

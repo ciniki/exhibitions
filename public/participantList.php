@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:     The ID of the business to get events for.
+// tnid:     The ID of the tenant to get events for.
 // type:            The type of participants to get.  Refer to participantAdd for 
 //                  more information on types.
 //
@@ -20,7 +20,7 @@ function ciniki_exhibitions_participantList($ciniki) {
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_id'=>array('required'=>'yes', 'blankk'=>'yes', 'name'=>'Exhibition'),
         'type'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Participant Type'),
         'details'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Details'),
@@ -31,10 +31,10 @@ function ciniki_exhibitions_participantList($ciniki) {
     $args = $rc['args'];
     
     //  
-    // Check access to business_id as owner, or sys admin. 
+    // Check access to tnid as owner, or sys admin. 
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $ac = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.participantList');
+    $ac = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.participantList');
     if( $ac['stat'] != 'ok' ) { 
         return $ac;
     }   
@@ -81,17 +81,17 @@ function ciniki_exhibitions_participantList($ciniki) {
     $strsql .= "FROM ciniki_exhibition_participants "
         . "LEFT JOIN ciniki_exhibition_contacts ON ("
             . "ciniki_exhibition_participants.contact_id = ciniki_exhibition_contacts.id "
-            . "AND ciniki_exhibition_contacts.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+            . "AND ciniki_exhibition_contacts.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
             . ") ";
     if( isset($args['details']) && $args['details'] == 'yes' ) {
         $strsql .= "LEFT JOIN ciniki_exhibition_contact_images ON ("
             . "ciniki_exhibition_participants.contact_id = ciniki_exhibition_contact_images.contact_id "
-            . "AND ciniki_exhibition_contact_images.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+            . "AND ciniki_exhibition_contact_images.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
             . ") ";
     }
 
     $strsql .= "WHERE ciniki_exhibition_participants.exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
-        . "AND ciniki_exhibition_participants.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "AND ciniki_exhibition_participants.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "";
     if( isset($args['type']) && $args['type'] != '' ) {
         $strsql .= "AND (ciniki_exhibition_participants.type&'" . ciniki_core_dbQuote($ciniki, $args['type']) . "') > 0 ";

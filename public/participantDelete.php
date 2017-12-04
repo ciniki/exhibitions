@@ -16,7 +16,7 @@ function ciniki_exhibitions_participantDelete(&$ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'participant_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Participant'),
         )); 
     if( $rc['stat'] != 'ok' ) { 
@@ -26,10 +26,10 @@ function ciniki_exhibitions_participantDelete(&$ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.participantDelete', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.participantDelete', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }   
@@ -38,7 +38,7 @@ function ciniki_exhibitions_participantDelete(&$ciniki) {
     // Get the existing image information
     //
     $strsql = "SELECT uuid FROM ciniki_exhibition_participants "
-        . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "AND id = '" . ciniki_core_dbQuote($ciniki, $args['participant_id']) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'item');
@@ -55,6 +55,6 @@ function ciniki_exhibitions_participantDelete(&$ciniki) {
     // Delete the object
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectDelete');
-    return ciniki_core_objectDelete($ciniki, $args['business_id'], 'ciniki.exhibitions.participant', $args['participant_id'], $uuid, 0x07);
+    return ciniki_core_objectDelete($ciniki, $args['tnid'], 'ciniki.exhibitions.participant', $args['participant_id'], $uuid, 0x07);
 }
 ?>

@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:         The ID of the business to add the exhibition to.
+// tnid:         The ID of the tenant to add the exhibition to.
 // exhibition_id:       The ID of the exhibition to get the information about.
 //
 // Returns
@@ -19,7 +19,7 @@ function ciniki_exhibitions_exhibitionGet($ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition'),
         )); 
     if( $rc['stat'] != 'ok' ) { 
@@ -29,10 +29,10 @@ function ciniki_exhibitions_exhibitionGet($ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.exhibitionGet', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.exhibitionGet', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }   
@@ -52,7 +52,7 @@ function ciniki_exhibitions_exhibitionGet($ciniki) {
         . "DATE_FORMAT(ciniki_exhibitions.start_date, '" . ciniki_core_dbQuote($ciniki, $date_format) . "') AS start_date, "
         . "DATE_FORMAT(ciniki_exhibitions.end_date, '" . ciniki_core_dbQuote($ciniki, $date_format) . "') AS end_date "
         . "FROM ciniki_exhibitions "
-        . "WHERE ciniki_exhibitions.business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "WHERE ciniki_exhibitions.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "AND ciniki_exhibitions.id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'exhibition');

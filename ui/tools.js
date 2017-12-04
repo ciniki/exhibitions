@@ -83,7 +83,7 @@ function ciniki_exhibitions_tools() {
         if( typet != null ) { this.missing.participant_type_text = typet; }
         if( eid != null ) { this.missing.exhibition_id = eid; }
         this.missing.data = {};
-        M.api.getJSONCb('ciniki.exhibitions.participantList', {'business_id':M.curBusinessID,
+        M.api.getJSONCb('ciniki.exhibitions.participantList', {'tnid':M.curTenantID,
             'exhibition_id':this.missing.exhibition_id,
             'type':this.missing.participant_type, 'details':'yes'}, function(rsp) {
                 if( rsp.stat != 'ok' ) {
@@ -149,6 +149,6 @@ function ciniki_exhibitions_tools() {
     };
 
     this.downloadExcel = function(api, tour_id) {
-        M.api.openFile(api, {'business_id':M.curBusinessID, 'exhibition_id':tour_id, 'type':0x40});
+        M.api.openFile(api, {'tnid':M.curTenantID, 'exhibition_id':tour_id, 'type':0x40});
     };
 }

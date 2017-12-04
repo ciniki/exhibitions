@@ -1,4 +1,4 @@
-Ciniki - Small Business Management Platform
+Ciniki - Multitenant Cloud Platform
 ===========================================
 
 The exhibitions modules stores information about exhibitions, shows,

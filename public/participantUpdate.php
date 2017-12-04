@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:         The ID of the business to add the exhibition to.
+// tnid:         The ID of the tenant to add the exhibition to.
 // name:                The name of the exhibition.  
 //
 // Returns
@@ -20,7 +20,7 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Exhibition'), 
         'participant_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Participant'),
         'contact_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'Contact'), 
@@ -40,10 +40,10 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.participantUpdate', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.participantUpdate', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }
@@ -52,6 +52,6 @@ function ciniki_exhibitions_participantUpdate(&$ciniki) {
     // Update the participant
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectUpdate');
-    return ciniki_core_objectUpdate($ciniki, $args['business_id'], 'ciniki.exhibitions.participant', $args['participant_id'], $args, 0x07);
+    return ciniki_core_objectUpdate($ciniki, $args['tnid'], 'ciniki.exhibitions.participant', $args['participant_id'], $args, 0x07);
 }
 ?>

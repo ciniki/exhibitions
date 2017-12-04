@@ -126,7 +126,7 @@ function ciniki_exhibitions_main() {
             return '';
         };
         this.edit.fieldHistoryArgs = function(s, i) {
-            return {'method':'ciniki.exhibitions.exhibitionHistory', 'args':{'business_id':M.curBusinessID, 
+            return {'method':'ciniki.exhibitions.exhibitionHistory', 'args':{'tnid':M.curTenantID, 
                 'exhibition_id':this.exhibition_id, 'field':i}};
         };
         this.edit.addButton('save', 'Save', 'M.ciniki_exhibitions_main.saveExhibition();');
@@ -154,7 +154,7 @@ function ciniki_exhibitions_main() {
     this.showMenu = function(cb) {
         // Get the list of existing exhibitions
         var rsp = M.api.getJSONCb('ciniki.exhibitions.exhibitionList', 
-            {'business_id':M.curBusinessID}, function(rsp) {
+            {'tnid':M.curTenantID}, function(rsp) {
                 if( rsp.stat != 'ok' ) {
                     M.api.err(rsp);
                     return false;
@@ -171,7 +171,7 @@ function ciniki_exhibitions_main() {
             this.exhibition.exhibition_id = eid;
         }
         var rsp = M.api.getJSONCb('ciniki.exhibitions.exhibitionGet', 
-            {'business_id':M.curBusinessID, 'exhibition_id':this.exhibition.exhibition_id}, function(rsp) {
+            {'tnid':M.curTenantID, 'exhibition_id':this.exhibition.exhibition_id}, function(rsp) {
                 if( rsp.stat != 'ok' ) {
                     M.api.err(rsp);
                     return false;
@@ -206,7 +206,7 @@ function ciniki_exhibitions_main() {
         }
         if( this.edit.exhibition_id > 0 ) {
             var rsp = M.api.getJSONCb('ciniki.exhibitions.exhibitionGet', 
-                {'business_id':M.curBusinessID, 'exhibition_id':this.edit.exhibition_id}, function(rsp) {
+                {'tnid':M.curTenantID, 'exhibition_id':this.edit.exhibition_id}, function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);
                         return false;
@@ -251,7 +251,7 @@ function ciniki_exhibitions_main() {
             var c = this.edit.serializeForm('no');
             if( c != '' ) {
                 var rsp = M.api.postJSONCb('ciniki.exhibitions.exhibitionUpdate', 
-                    {'business_id':M.curBusinessID, 'exhibition_id':this.edit.exhibition_id}, c, function(rsp) {
+                    {'tnid':M.curTenantID, 'exhibition_id':this.edit.exhibition_id}, c, function(rsp) {
                         if( rsp.stat != 'ok' ) {
                             M.api.err(rsp);
                             return false;
@@ -264,7 +264,7 @@ function ciniki_exhibitions_main() {
         } else {
             var c = this.edit.serializeForm('yes');
             var rsp = M.api.postJSONCb('ciniki.exhibitions.exhibitionAdd', 
-                {'business_id':M.curBusinessID}, c, function(rsp) {
+                {'tnid':M.curTenantID}, c, function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);
                         return false;

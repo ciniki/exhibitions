@@ -2,5 +2,5 @@
 # Add the unique index to the contacts for permalink
 #
 ALTER TABLE ciniki_exhibition_contacts ADD COLUMN short_description varchar(1000) not null AFTER primary_image_id;
-CREATE UNIQUE INDEX permalink ON ciniki_exhibition_contacts (business_id, permalink);
+CREATE UNIQUE INDEX permalink ON ciniki_exhibition_contacts (tnid, permalink);
 ALTER TABLE ciniki_exhibition_contacts COMMENT='v1.02';

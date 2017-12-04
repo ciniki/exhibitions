@@ -7,7 +7,7 @@
 // ---------
 // api_key:
 // auth_token:
-// business_id:     The ID of the business to get events for.
+// tnid:     The ID of the tenant to get events for.
 // type:            The type of participants to get.  Refer to participantAdd for 
 //                  more information on types.
 //
@@ -20,7 +20,7 @@ function ciniki_exhibitions_imageList($ciniki) {
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'exhibition_id'=>array('required'=>'yes', 'blankk'=>'yes', 'name'=>'Exhibition'),
         'category'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Category'),
         ));
@@ -30,10 +30,10 @@ function ciniki_exhibitions_imageList($ciniki) {
     $args = $rc['args'];
     
     //  
-    // Check access to business_id as owner, or sys admin. 
+    // Check access to tnid as owner, or sys admin. 
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $ac = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.imageList');
+    $ac = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.imageList');
     if( $ac['stat'] != 'ok' ) { 
         return $ac;
     }   
@@ -49,7 +49,7 @@ function ciniki_exhibitions_imageList($ciniki) {
         $strsql = "SELECT IF(category='', 'Uncategorized', category) AS category, "
             . "COUNT(*) AS count "
             . "FROM ciniki_exhibition_images "
-            . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+            . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
             . "AND exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' "
             . "GROUP BY category "
             . "ORDER BY category "
@@ -87,7 +87,7 @@ function ciniki_exhibitions_imageList($ciniki) {
         . "ciniki_exhibition_images.image_id, "
         . "ciniki_exhibition_images.description "
         . "FROM ciniki_exhibition_images "
-        . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "AND exhibition_id = '" . ciniki_core_dbQuote($ciniki, $args['exhibition_id']) . "' ";
     if( $args['category'] == 'Uncategorized' ) {
         $strsql .= "AND category = '' ";
@@ -112,7 +112,7 @@ function ciniki_exhibitions_imageList($ciniki) {
     ciniki_core_loadMethod($ciniki, 'ciniki', 'images', 'private', 'loadCacheThumbnail');
     foreach($images as $inum => $image) {
         if( isset($image['image']['image_id']) && $image['image']['image_id'] > 0 ) {
-            $rc = ciniki_images_loadCacheThumbnail($ciniki, $args['business_id'], $image['image']['image_id'], 75);
+            $rc = ciniki_images_loadCacheThumbnail($ciniki, $args['tnid'], $image['image']['image_id'], 75);
             if( $rc['stat'] != 'ok' ) {
                 return $rc;
             }

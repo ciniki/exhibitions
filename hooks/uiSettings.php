@@ -7,12 +7,12 @@
 // Arguments
 // ---------
 // ciniki:
-// business_id:     The ID of the business to get events for.
+// tnid:     The ID of the tenant to get events for.
 //
 // Returns
 // -------
 //
-function ciniki_exhibitions_hooks_uiSettings($ciniki, $business_id, $args) {
+function ciniki_exhibitions_hooks_uiSettings($ciniki, $tnid, $args) {
 
     //
     // Setup the default response
@@ -22,7 +22,7 @@ function ciniki_exhibitions_hooks_uiSettings($ciniki, $business_id, $args) {
     //
     // Check permissions for what menu items should be available
     //
-    if( isset($ciniki['business']['modules']['ciniki.exhibitions'])
+    if( isset($ciniki['tenant']['modules']['ciniki.exhibitions'])
         && (isset($args['permissions']['owners'])
             || isset($args['permissions']['employees'])
             || isset($args['permissions']['resellers'])
@@ -37,9 +37,9 @@ function ciniki_exhibitions_hooks_uiSettings($ciniki, $business_id, $args) {
             . "ciniki_exhibition_details.detail_value "
             . "FROM ciniki_exhibitions "
             . "LEFT JOIN ciniki_exhibition_details ON (ciniki_exhibitions.id = ciniki_exhibition_details.exhibition_id "
-                . "AND ciniki_exhibition_details.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
+                . "AND ciniki_exhibition_details.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
                 . ") "
-            . "WHERE ciniki_exhibitions.business_id = '" . ciniki_core_dbQuote($ciniki, $business_id) . "' "
+            . "WHERE ciniki_exhibitions.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
             . "ORDER BY ciniki_exhibitions.start_date DESC "
             . "";
         ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryTree');

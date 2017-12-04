@@ -16,7 +16,7 @@ function ciniki_exhibitions_contactImageAdd(&$ciniki) {
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'prepareArgs');
     $rc = ciniki_core_prepareArgs($ciniki, 'no', array(
-        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'), 
+        'tnid'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Tenant'), 
         'contact_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Contact'), 
         'image_id'=>array('required'=>'yes', 'blank'=>'yes', 'name'=>'Image'),
         'name'=>array('required'=>'no', 'blank'=>'yes', 'default'=>'', 'name'=>'Title'), 
@@ -33,10 +33,10 @@ function ciniki_exhibitions_contactImageAdd(&$ciniki) {
 
     //  
     // Make sure this module is activated, and
-    // check permission to run this function for this business
+    // check permission to run this function for this tenant
     //  
     ciniki_core_loadMethod($ciniki, 'ciniki', 'exhibitions', 'private', 'checkAccess');
-    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['business_id'], 'ciniki.exhibitions.contactImageAdd', 0); 
+    $rc = ciniki_exhibitions_checkAccess($ciniki, $args['tnid'], 'ciniki.exhibitions.contactImageAdd', 0); 
     if( $rc['stat'] != 'ok' ) { 
         return $rc;
     }   
@@ -67,7 +67,7 @@ function ciniki_exhibitions_contactImageAdd(&$ciniki) {
     // Check the permalink doesn't already exist
     //
     $strsql = "SELECT id FROM ciniki_exhibition_contact_images "
-        . "WHERE business_id = '" . ciniki_core_dbQuote($ciniki, $args['business_id']) . "' "
+        . "WHERE tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
         . "AND permalink = '" . ciniki_core_dbQuote($ciniki, $args['permalink']) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.exhibitions', 'image');
@@ -82,6 +82,6 @@ function ciniki_exhibitions_contactImageAdd(&$ciniki) {
     // Add the member image
     //
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectAdd');
-    return ciniki_core_objectAdd($ciniki, $args['business_id'], 'ciniki.exhibitions.contact_image', $args, 0x07);
+    return ciniki_core_objectAdd($ciniki, $args['tnid'], 'ciniki.exhibitions.contact_image', $args, 0x07);
 }
 ?>
