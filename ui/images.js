@@ -207,7 +207,7 @@ function ciniki_exhibitions_images() {
         //
         var appContainer = M.createContainer(appPrefix, 'ciniki_exhibitions_images', 'yes');
         if( appContainer == null ) {
-            alert('App Error');
+            M.alert('App Error');
             return false;
         }
     
@@ -257,7 +257,7 @@ function ciniki_exhibitions_images() {
             this.categories.refresh();
             this.categories.show(cb);
         } else {
-            alert('Sorry, no images found');
+            M.alert('Sorry, no images found');
         }
     };
 
@@ -374,13 +374,13 @@ function ciniki_exhibitions_images() {
                 if( files[i].type == null ) { continue; }
                 if( files[i].type != 'image/jpeg' 
                     ) {
-                    alert("I'm sorry, we only allow jpeg images to be uploaded.");
+                    M.alert("I'm sorry, we only allow jpeg images to be uploaded.");
                     M.stopLoad();
                     return false;
                 }
                 var rsp = M.api.postJSONFile('ciniki.images.add', {'tnid':M.curTenantID}, files[i], c);
                 if( rsp == null ) {
-                    alert('Unknown error occured, please try again');
+                    M.alert('Unknown error occured, please try again');
                     M.stopLoad();
                     return false;
                 }

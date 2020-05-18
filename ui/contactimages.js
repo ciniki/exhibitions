@@ -61,7 +61,7 @@ function ciniki_exhibitions_contactimages() {
         //
         var appContainer = M.createContainer(appPrefix, 'ciniki_exhibitions_contactimages', 'yes');
         if( appContainer == null ) {
-            alert('App Error');
+            M.alert('App Error');
             return false;
         }
 
@@ -136,15 +136,15 @@ function ciniki_exhibitions_contactimages() {
     };
 
     this.deleteImage = function() {
-        if( confirm('Are you sure you want to delete this image?') ) {
+        M.confirm('Are you sure you want to delete this image?',null,function() {
             var rsp = M.api.getJSONCb('ciniki.exhibitions.contactImageDelete', {'tnid':M.curTenantID, 
-                'contact_image_id':this.edit.contact_image_id}, function(rsp) {
+                'contact_image_id':M.ciniki_exhibitions_contactimages.edit.contact_image_id}, function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);
                         return false;
                     }
                     M.ciniki_exhibitions_contactimages.edit.close();
                 });
-        }
+        });
     };
 }

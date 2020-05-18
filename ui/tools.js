@@ -57,7 +57,7 @@ function ciniki_exhibitions_tools() {
         //
         var appContainer = M.createContainer(appPrefix, 'ciniki_exhibitions_tools', 'yes');
         if( appContainer == null ) {
-            alert('App Error');
+            M.alert('App Error');
             return false;
         }
 

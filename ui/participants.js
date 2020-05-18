@@ -463,7 +463,7 @@ function ciniki_exhibitions_participants() {
         //
         var appContainer = M.createContainer(appPrefix, 'ciniki_exhibitions_participants', 'yes');
         if( appContainer == null ) {
-            alert('App Error');
+            M.alert('App Error');
             return false;
         }
 
@@ -516,7 +516,7 @@ function ciniki_exhibitions_participants() {
             && args.contacts != null && args.contacts == 'yes' ) {
             this.showContacts(cb, args.exhibition_id);
         } else {
-            alert('Sorry, no exhibition specified');
+            M.alert('Sorry, no exhibition specified');
             return false;
         }
     }
@@ -944,9 +944,9 @@ function ciniki_exhibitions_participants() {
     };
 
     this.deleteParticipant = function() {
-        if( confirm('Are you sure you want to ' + this.edit.sections._buttons.buttons.delete.label.toLowerCase() + '?') ) {
+        M.confirm('Are you sure you want to ' + this.edit.sections._buttons.buttons.delete.label.toLowerCase(,null,function() {
             var rsp = M.api.getJSONCb('ciniki.exhibitions.participantDelete', {'tnid':M.curTenantID, 
-                'participant_id':this.edit.participant_id}, function(rsp) {
+                'participant_id':M.ciniki_exhibitions_participants.edit.participant_id}, function(rsp) {
                     if( rsp.stat != 'ok' ) {
                         M.api.err(rsp);
                         return false;
@@ -954,7 +954,7 @@ function ciniki_exhibitions_participants() {
                     M.ciniki_exhibitions_participants.participant.close();
                     M.ciniki_exhibitions_participants.edit.reset();
                 });
-        }
+        });
     };
 
     this.lookupLatLong = function() {
@@ -982,7 +982,7 @@ function ciniki_exhibitions_participants() {
                 M.ciniki_exhibitions_participants.edit.setFieldValue('latitude', results[0].geometry.location.lat());
                 M.ciniki_exhibitions_participants.edit.setFieldValue('longitude', results[0].geometry.location.lng());
             } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+                M.alert('Geocode was not successful for the following reason: ' + status);
             }
         }); 
         M.stopLoad();
