@@ -944,7 +944,7 @@ function ciniki_exhibitions_participants() {
     };
 
     this.deleteParticipant = function() {
-        M.confirm('Are you sure you want to ' + this.edit.sections._buttons.buttons.delete.label.toLowerCase(,null,function() {
+        M.confirm('Are you sure you want to ' + this.edit.sections._buttons.buttons.delete.label,function() {
             var rsp = M.api.getJSONCb('ciniki.exhibitions.participantDelete', {'tnid':M.curTenantID, 
                 'participant_id':M.ciniki_exhibitions_participants.edit.participant_id}, function(rsp) {
                     if( rsp.stat != 'ok' ) {
